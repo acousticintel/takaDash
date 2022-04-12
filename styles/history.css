@@ -1,0 +1,17 @@
+.history-page {
+  @apply min-h-screen text-gray-800 pt-8 px-4 pb-8;
+}
+
+.history-page > section {
+  box-shadow: 20px 20px 65px #bababa, -20px -20px 65px #ffffff;
+  @apply h-full px-10 py-12 rounded-xl my-10 bg-gray-50;
+}
+
+.history-page h1 {
+  @apply font-bold text-emerald-900 text-xl;
+}
+
+.hist__graphs{
+  @apply flex gap-8 w-full justify-center items-center
+  flex-col md:flex-row mt-10;
+}

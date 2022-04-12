@@ -1,0 +1,76 @@
+.request__table{
+  @apply flex flex-col;
+}
+
+.request__table table{
+  @apply min-w-full;
+}
+
+.request__table table > thead > tr > th{
+  @apply font-medium text-gray-400 px-0 text-sm
+  sm:px-2 md:px-6 py-4 text-center uppercase;
+}
+
+.request__table table > thead > tr > th:first-child{
+  @apply text-left;
+}
+
+.request__table table > tbody > tr:nth-child(odd){
+  @apply bg-gray-50;
+}
+
+.request__table table > tbody > tr {
+  @apply transition duration-300 ease-in-out hover:bg-teal-100;
+}
+
+.request__table table > tbody > tr > td{
+  @apply text-gray-900 font-light capitalize text-sm
+  px-1 sm:px-2 md:px-6 py-4 whitespace-nowrap text-center;
+}
+
+.request__table table > tbody > tr > td:first-child{
+  @apply whitespace-normal;
+}
+
+.request__table table > tbody > tr > td:last-child{
+  @apply uppercase font-bold tracking-wide;
+}
+
+
+.hist__table{
+  @apply flex flex-col;
+}
+
+.hist__table table{
+  @apply min-w-full;
+}
+
+.hist__table table > thead > tr > th{
+  @apply font-medium text-gray-400 px-0 text-sm
+  sm:px-2 md:px-6 py-4 text-center uppercase;
+}
+
+.hist__table table > tbody > tr:nth-child(odd){
+  @apply bg-white;
+}
+
+.hist__table table > tbody > tr {
+  @apply transition duration-300 ease-in-out hover:bg-teal-50;
+}
+
+.hist__table table > tbody > tr:last-child {
+  @apply border-0;
+}
+
+.hist__table table > tbody > tr > td{
+  @apply text-gray-900 font-light capitalize rounded-md
+  px-1 sm:px-2 md:px-6 py-4 whitespace-nowrap text-center;
+}
+
+.hist__table table > tbody > tr > td:first-child{
+  @apply whitespace-normal;
+}
+
+.hist__table table > tbody > tr > td:last-child{
+  @apply uppercase font-bold tracking-wide;
+}

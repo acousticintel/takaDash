@@ -1,0 +1,13 @@
+.request__page{
+  caret-color: transparent;
+  @apply text-emerald-800 pt-8 pb-8; 
+}
+
+.request__page > section{
+  @apply h-full my-10;
+}
+
+
+.request__page h1{
+  @apply text-xl font-bold;
+}

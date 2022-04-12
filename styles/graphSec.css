@@ -1,0 +1,27 @@
+.dash__graphs{
+  @apply grid grid-cols-1 xl:grid-cols-2 gap-6 my-5;
+}
+
+.dash__graph{
+  @apply bg-white py-4 px-8  pr-10 rounded-xl;
+}
+
+.dash__graph h1{
+  @apply text-xl font-bold;
+}
+
+.dash__graph .icon{
+  @apply relative w-10 h-10 px-10;
+}
+
+.dash__graph h6{
+  @apply ml-2 text-lg text-gray-500;
+}
+
+.dash__graph section{
+  @apply flex border-b border-gray-200 py-4;
+}
+
+.dash__graph section:last-child{
+  @apply flex border-0;
+}

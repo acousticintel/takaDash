@@ -1,0 +1,19 @@
+.stats{
+  @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4;
+}
+
+.stat{
+  @apply bg-white p-4 rounded-xl m-2;
+}
+
+.stat h5{
+  @apply text-3xl font-bold;
+}
+
+.stat h6{
+  @apply uppercase text-gray-500;
+}
+
+.stat span{
+  @apply uppercase text-gray-400 text-sm;
+}
