@@ -115,12 +115,6 @@ export default function RecentModal() {
     setPanel("qntt");
   };
 
-  const onSetQntt = (q) => {
-    if (q >= 0) {
-      setQntt(q);
-    }
-  };
-
   const doneQntt = () => {
     if (qntt > 0) {
       setPanel("type");

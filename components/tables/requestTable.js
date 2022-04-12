@@ -1,5 +1,6 @@
 import Image from "next/image";
 import dayjs from "dayjs";
+import { useRouter } from 'next/router';
 import { motion } from "framer-motion";
 import React, { useEffect } from "react";
 //custom
@@ -23,6 +24,7 @@ const childVar = {
 };
 
 export default function RequestTable() {
+  const router = useRouter();
   const { onSetRecModal, requests, onSetSelRequest } = useData();
 
   const handleClick = (r) => {
@@ -30,6 +32,11 @@ export default function RequestTable() {
     onSetSelRequest(r);
     onSetRecModal(true);
   };
+
+  const handleSeeClick = e => {
+    e.preventDefault();
+    router.push('/history')
+  }
 
   useEffect(() => {
     //console.log(requests)
@@ -89,6 +96,9 @@ export default function RequestTable() {
           </div>
         </div>
       </div>
+      <h6 onClick={handleSeeClick} className="text-right w-full mt-2 -mb-10">
+        See more
+      </h6>
     </div>
   );
 }

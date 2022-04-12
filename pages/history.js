@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 //custom
 import { useData } from "../context/dataContext";
 import { AuthGuard } from "../components/elements/authGuard";
-import Title from "../components/elements/title";
 import Status from "../components/elements/status";
 import RecentModal from "../components/modals/recentModal";
 import PieG from "../components/graphSec/pieG";

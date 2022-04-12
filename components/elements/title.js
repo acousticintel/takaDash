@@ -14,7 +14,7 @@ const contVar = {
 
 const scaleVar = {
   hide: {
-    y:-5,
+    y: -5,
     opacity: 0,
     scale: 0.95,
   },
@@ -44,15 +44,18 @@ const slideVar = {
 
 export default function Title({ title }) {
   return (
-    <motion.div 
-    variants={contVar} 
-    initial="hide" 
-    animate="show"
-    className="flex relative">
+    <motion.div
+      variants={contVar}
+      initial="hide"
+      animate="show"
+      className="flex relative"
+    >
       <motion.div variants={scaleVar} className="absolute -bottom-2 -left-3">
         <Image src="/assets/leaf.webp" height={20} width={35} />
       </motion.div>
-      <motion.span variants={slideVar} className="text-2xl text-green-600 ml-5">{title}</motion.span>
+      <motion.span variants={slideVar} className="text-2xl text-green-600 ml-5">
+        {title}
+      </motion.span>
     </motion.div>
-  )
+  );
 }
