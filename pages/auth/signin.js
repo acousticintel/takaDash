@@ -22,7 +22,7 @@ export default function SignIn({ providers }) {
         {providers && Object.values(providers).map((provider) => (
           <div key={provider.name} className='mt-6'>
             <button
-              onClick={() => SignInProvider(provider.id, { callbackUrl: '/dashboard' })}>
+              onClick={() => SignInProvider(provider.id, { callbackUrl: '/' })}>
               Sign in with {provider.name}
             </button>
           </div>
