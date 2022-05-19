@@ -1,0 +1,8 @@
+.breakdown__page{
+  @apply container mx-auto px-6 pt-6 gap-6
+  grid grid-cols-1 lg:grid-cols-2;
+}
+
+.breakdown__page > section{
+  @apply bg-white rounded-3xl p-8;
+}

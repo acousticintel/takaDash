@@ -4,26 +4,22 @@ import { useData } from "../../context/dataContext";
 export default function Stats() {
   const { users, requests, onSetSelRequest } = useData();
   return (
-    <div className="stats">
+    <div className="overflow-hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       <div className="stat">
-        <h6>Users</h6>
-        <h5>{users?.length ? users.length : 0}</h5>
-        <span>+3% since last Month</span>
+        <h6>Total Waste</h6>
+        <h5>2000 kg</h5>
       </div>
       <div className="stat">
-        <h6>Requests</h6>
-        <h5>{requests?.length ? requests.length : 0}</h5>
-        <span>+3% since last Month</span>
+        <h6>Recyclable Waste</h6>
+        <h5>1940 kg</h5>
       </div>
       <div className="stat">
-        <h6>Pending</h6>
-        <h5>22</h5>
-        <span>+3% since last Month</span>
+        <h6>Non Recyclable Waste</h6>
+        <h5>60 kg</h5>
       </div>
       <div className="stat">
-        <h6>Collected</h6>
-        <h5>220 kg</h5>
-        <span>+3% since last Month</span>
+        <h6>Recycling Rate</h6>
+        <h5>97%</h5>
       </div>
     </div>
   );

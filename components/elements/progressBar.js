@@ -7,7 +7,7 @@ const progressVar = {
     width: 0,
   },
   show: (w)=>({
-    width: `${w}%`,
+    width: `${w + 30}%`,
     transition: {
       delay: 0.01 * w,
       type: "spring",
@@ -32,14 +32,26 @@ export default function ProgressBar({ color, value }) {
 
   useEffect(() => {
     if (color === "blue") {
-      setBarColor("bg-blue-600");
+      setBarColor("bg-blue-500");
       setBackColor("bg-blue-200");
-    } else if (color === "pink") {
-      setBarColor("bg-pink-600");
-      setBackColor("bg-pink-200");
+    } else if (color === "orange") {
+      setBarColor("bg-orange-500");
+      setBackColor("bg-orange-200");
     } else if (color === "teal") {
-      setBarColor("bg-teal-600");
+      setBarColor("bg-teal-500");
       setBackColor("bg-teal-200");
+    } else if (color === "yellow") {
+      setBarColor("bg-yellow-500");
+      setBackColor("bg-yellow-200");
+    } else if (color === "slate") {
+      setBarColor("bg-slate-500");
+      setBackColor("bg-slate-200");
+    } else if (color === "purple") {
+      setBarColor("bg-purple-500");
+      setBackColor("bg-purple-200");
+    } else if (color === "red") {
+      setBarColor("bg-red-500");
+      setBackColor("bg-red-200");
     } else {
       setBarColor("bg-gray-600");
       setBackColor("bg-gray-200");
