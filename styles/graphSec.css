@@ -3,8 +3,15 @@
 }
 
 .dash__graph{
-  @apply bg-white py-4 px-8  pr-10 rounded-xl;
+  @apply bg-white pt-8 pb-4 pl-4 md:pl-8  pr-5 md:pr-10 rounded-xl 
+  w-full overflow-hidden;
 }
+
+.dash__linegraph{
+  min-width: 350px;
+  @apply bg-white py-4 px-8  pr-10 rounded-xl overflow-hidden;
+}
+
 
 .dash__graph h1{
   @apply text-xl font-bold;

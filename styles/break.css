@@ -4,5 +4,6 @@
 }
 
 .breakdown__page > section{
-  @apply bg-white rounded-3xl p-8;
+  min-width: 500px;
+  @apply bg-white rounded-3xl p-8 overflow-hidden;
 }

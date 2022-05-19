@@ -133,7 +133,7 @@ export default function GraphSec() {
           <button className="btn btn-sm btn-ghost">See More</button>
         </Link>
       </div>
-      <div className="dash__graph">
+      <div className="dash__linegraph">
         <LineG />
       </div>
       <div className="flex justify-end">
