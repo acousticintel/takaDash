@@ -18,7 +18,7 @@ export default function Stats() {
         <h5>60 kg</h5>
       </div>
       <div className="stat">
-        <h6>Recycling Rate</h6>
+        <h6>Landfill diversion rate</h6>
         <h5>97%</h5>
       </div>
     </div>
