@@ -1,15 +1,15 @@
 .stat{
-  @apply bg-white p-4 rounded-xl  flex flex-col justify-between;
+  @apply bg-white p-4 rounded-xl flex flex-col;
 }
 
 .stat h5{
-  @apply text-3xl font-semibold text-teal-700 text-right  bg-blue-300;
+  @apply text-3xl font-semibold text-teal-700 text-right;
 }
 
 .stat h6{
-  @apply uppercase font-medium text-gray-500  bg-red-300 h-full;
+  @apply uppercase font-medium text-gray-500 flex grow;
 }
 
 .stat span{
-  @apply uppercase text-gray-400 text-sm;
+  @apply uppercase text-gray-400 text-sm flex shrink;
 }
