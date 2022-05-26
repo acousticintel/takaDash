@@ -1,5 +1,5 @@
 .dash__graphs{
-  @apply grid grid-cols-1 xl:grid-cols-2 gap-6 my-5;
+  @apply grid grid-cols-1 gap-6 my-5 w-full;
 }
 
 .dash__graph{
