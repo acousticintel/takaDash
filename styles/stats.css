@@ -1,5 +1,5 @@
 .stat{
-  @apply bg-white p-4 rounded-xl flex flex-col;
+  @apply bg-white p-4 rounded-xl flex flex-col justify-between;
 }
 
 .stat h5{
@@ -7,9 +7,5 @@
 }
 
 .stat h6{
-  @apply uppercase font-medium text-gray-500 flex grow;
-}
-
-.stat span{
-  @apply uppercase text-gray-400 text-sm flex shrink;
+  @apply uppercase font-medium text-gray-500;
 }
