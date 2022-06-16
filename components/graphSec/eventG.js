@@ -138,6 +138,28 @@ export default function EventG({ total }) {
         <section>
           <div className="icon">
             <Image
+              src={`/assets/glass-w.png`}
+              className="object-contain"
+              layout="fill"
+              alt=""
+            />
+          </div>
+          <div className="w-full">
+            <div className="flex items-end justify-between">
+              <h5 className="font-medium">Cloth</h5>
+              <h6 className="font-medium">
+                {getPercentage(total.cloth, total.total)}% - {total?.cloth}kg
+              </h6>
+            </div>
+            <ProgressBar
+              color="teal"
+              value={getRoundInt(total.cloth, total.total)}
+            />
+          </div>
+        </section>
+        <section>
+          <div className="icon">
+            <Image
               src={`/assets/metal-w.png`}
               className="object-contain"
               layout="fill"

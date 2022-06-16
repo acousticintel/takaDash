@@ -28,7 +28,7 @@ export default function EntryPage() {
   const [glass, setGlass] = useState({ data: "", state: null });
   const [organic, setOrganic] = useState({ data: "", state: null });
   const [non, setNon] = useState({ data: "", state: null });
-
+  const [cloth, setCloth] = useState({ data: "", state: null });
 
   useEffect(() => {
     let c = {};
@@ -76,7 +76,7 @@ export default function EntryPage() {
         state: "error",
         mess: "Input must be a number",
       });
-    }
+    } 
   };
 
   const fill = (obj) => {
@@ -87,6 +87,7 @@ export default function EntryPage() {
     setGlass({ data: obj.glass, state: null });
     setOrganic({ data: obj.organic, state: null });
     setNon({ data: obj.non, state: null });
+    setCloth({ data: obj.cloth, state: null });
   };
 
   const clear = () => {
@@ -98,6 +99,7 @@ export default function EntryPage() {
     setGlass({ data: "", state: null });
     setOrganic({ data: "", state: null });
     setNon({ data: "", state: null });
+    setCloth({ data: "", state: null });
   };
 
   const handleData = async (e) => {
@@ -111,15 +113,18 @@ export default function EntryPage() {
       glass: Number(glass?.data !== "" ? glass.data : 0),
       organic: Number(organic?.data !== "" ? organic.data : 0),
       non: Number(non?.data !== "" ? non.data : 0),
+      cloth: Number(cloth?.data !== "" ? cloth.data : 0),
       total:
         Number(plastic?.data !== "" ? plastic.data : 0) +
         Number(metal?.data !== "" ? metal.data : 0) +
         Number(paper?.data !== "" ? paper.data : 0) +
         Number(glass?.data !== "" ? glass.data : 0) +
         Number(organic?.data !== "" ? organic.data : 0) +
-        Number(non?.data ? non.data : 0),
+        Number(non?.data ? non.data : 0) +
+        Number(cloth?.data ? cloth.data : 0),
     };
 
+    //console.log(obj);
     updateWasteProfile(
       "tI10yyei4ObyOQC9Txqd",
       "v99YlQ1WbMfeUewLfe7V",
@@ -136,6 +141,7 @@ export default function EntryPage() {
         console.log(err);
         swal("Sorry!", "Error whle updating!", "error");
       });
+    
   };
 
   return (
@@ -279,6 +285,27 @@ export default function EntryPage() {
               />
               {organic.state === "error" && (
                 <span className="input-error-message">{organic.mess}</span>
+              )}
+            </div>
+          </div>
+          <h1>Cloth</h1>
+          <div className="grid gap-6 grid-cols-1 w-full md:w-2/3 lg:w-3/5">
+            <div className="form-control w-full">
+              <label className="label">
+                <span className="label-text">Cloth</span>
+              </label>
+              <input
+                type="text"
+                value={cloth.data}
+                placeholder="Type here"
+                onChange={(event) => change(event, setCloth)}
+                className={classNames(
+                  "input input-bordered w-full focus:bg-white",
+                  cloth.state === "error" ? "input-error" : "input-primary"
+                )}
+              />
+              {cloth.state === "error" && (
+                <span className="input-error-message">{cloth.mess}</span>
               )}
             </div>
           </div>
