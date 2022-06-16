@@ -76,20 +76,20 @@ export default function EntryPage() {
         state: "error",
         mess: "Input must be a number",
       });
-    } 
+    }
   };
 
   const fill = (obj) => {
     setCompany("Pernod Ricard Kenya");
-    setPlastic({ data: obj.plastic, state: null });
-    setMetal({ data: obj.metal, state: null });
-    setPaper({ data: obj.paper, state: null });
-    setGlass({ data: obj.glass, state: null });
-    setOrganic({ data: obj.organic, state: null });
-    setNon({ data: obj.non, state: null });
-    setCloth({ data: obj.cloth, state: null });
-  };
-
+    setPlastic({data: obj?.plastic ? obj.plastic : 0, state: null});
+    setMetal({data: obj?.metal ? obj.metal : 0, state: null});
+    setPaper({data: obj?.paper ? obj.paper : 0, state: null});
+    setGlass({data: obj?.glass ? obj.glass : 0, state: null});
+    setOrganic({data: obj?.organic ? obj.organic : 0, state: null});
+    setNon({data: obj?.non ? obj.non : 0, state: null});
+    setCloth({data: obj?.cloth ? obj.cloth : 0, state: null});
+  }
+  
   const clear = () => {
     setCompany("Pernod Ricard Kenya");
     setSection("");
@@ -113,7 +113,6 @@ export default function EntryPage() {
       glass: Number(glass?.data !== "" ? glass.data : 0),
       organic: Number(organic?.data !== "" ? organic.data : 0),
       non: Number(non?.data !== "" ? non.data : 0),
-      cloth: Number(cloth?.data !== "" ? cloth.data : 0),
       total:
         Number(plastic?.data !== "" ? plastic.data : 0) +
         Number(metal?.data !== "" ? metal.data : 0) +
@@ -124,7 +123,6 @@ export default function EntryPage() {
         Number(cloth?.data !== "" ? cloth.data : 0),
     };
 
-    //console.log(obj);
     updateWasteProfile(
       "tI10yyei4ObyOQC9Txqd",
       "v99YlQ1WbMfeUewLfe7V",
@@ -141,7 +139,6 @@ export default function EntryPage() {
         console.log(err);
         swal("Sorry!", "Error whle updating!", "error");
       });
-    
   };
 
   return (
