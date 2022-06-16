@@ -24,24 +24,26 @@ export default function EventPage({ sectionsInit }) {
   }
 
   useEffect(() => {
-    const { company, event } = JSON.parse(info);
-    const q = collection(
-      db,
-      "wasteProfiles",
-      company,
-      "events",
-      event,
-      "sections"
-    );
+    if (info) {
+      const { company, event } = JSON.parse(info);
+      const q = collection(
+        db,
+        "wasteProfiles",
+        company,
+        "events",
+        event,
+        "sections"
+      );
 
-    getDocs(q).then((querySnapshot) => {
-      let tmp = [];
-      querySnapshot.forEach((doc) => {
-        tmp.push(doc.data());
+      getDocs(q).then((querySnapshot) => {
+        let tmp = [];
+        querySnapshot.forEach((doc) => {
+          tmp.push(doc.data());
+        });
+
+        setSections(tmp);
       });
-
-      setSections(tmp);
-    });
+    } 
   }, [info]);
 
   useEffect(() => {
