@@ -4,19 +4,8 @@ import { useEffect, useState } from "react";
 import { AuthGuard } from "../../components/elements/authGuard";
 import DropDown from "../../components/elements/dropDown";
 import { useData } from "../../context/dataContext";  
-import swal from '@sweetalert/with-react'
-//custom
-const FaEdit = dynamic(async () => (await import("react-icons/fa")).FaEdit);
-const BiRightArrow = dynamic(
-  async () => (await import("react-icons/bi")).BiRightArrow
-);
-const HiInformationCircle = dynamic(
-  async () => (await import("react-icons/hi")).HiInformationCircle
-);
-const MdHealthAndSafety = dynamic(
-  async () => (await import("react-icons/md")).MdHealthAndSafety
-);
-const MdClass = dynamic(async () => (await import("react-icons/md")).MdClass);
+import swal from 'sweetalert';
+
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
