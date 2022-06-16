@@ -79,4 +79,45 @@ export default function Profile({ userDataInit, companyDataInit }) {
   );
 }
 
+export const getServerSideProps = async (context) => {
+  try {
+    const company = context.query.company || "pernod";
+    const session = await getSession(context);
 
+    let companyData = {};
+    if (company) {
+      const q = query(
+        collection(db, "wasteProfiles"),
+        where("name", "==", company),
+        limit(1)
+      );
+
+      const querySnapshot = await getDocs(q);
+
+      querySnapshot.forEach((doc) => {
+        companyData = { ...doc.data(), id: doc.id };
+      });
+    }
+
+    let userData = {};
+    if (session?.user?.uid) {
+      const docRef = doc(db, "users", session?.user?.uid);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        userData = docSnap.data();
+      }
+    }
+    return {
+      props: {
+        userDataInit: JSON.stringify(userData),
+        companyDataInit: JSON.stringify(companyData),
+      },
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      props: {},
+    };
+  }
+};
