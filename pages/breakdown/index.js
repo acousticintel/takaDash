@@ -2,7 +2,7 @@ import React from "react";
 import { AuthGuard } from "../../components/elements/authGuard";
 import BarG from "../../components/graphSec/barG";
 
-export default function Breakdown() {
+export default function BreakdownPage() {
   const plasticData = [
     {
       name: "PET",
