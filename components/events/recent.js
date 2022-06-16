@@ -42,12 +42,12 @@ export default function Recent({ company }) {
               <div className="event">
                 <div className="event__img">
                   <Image
-                    src="/assets/connect.jpg"
+                    src={event.image}
                     layout="fill"
                     className="object-cover"
                   />
                 </div>
-                <h6>Jameson Connect</h6>
+                <h6>{event.name}</h6>
                 <span>{event.name}</span>
               </div>
             </Link>

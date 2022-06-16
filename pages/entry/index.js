@@ -43,7 +43,7 @@ export default function EntryPage() {
           "wasteProfiles",
           "tI10yyei4ObyOQC9Txqd",
           "events",
-          "PKhGF843RE4eyHGTldrn",
+          "v99YlQ1WbMfeUewLfe7V",
           "sections"
         ),
         where("section", "==", section.data),
@@ -164,7 +164,7 @@ export default function EntryPage() {
 
       updateWasteProfile(
         "tI10yyei4ObyOQC9Txqd",
-        "PKhGF843RE4eyHGTldrn",
+        "v99YlQ1WbMfeUewLfe7V",
         section.data,
         obj
       )

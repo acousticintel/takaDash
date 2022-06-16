@@ -79,7 +79,7 @@ export default function EventPage({ sectionsInit }) {
             </div>
           </>
         </div>
-        <EventsStats total={total?.total} />
+        <EventsStats total={total?.total ? total.total : 0} />
         <section>
           <EventG total={total} />
         </section>
