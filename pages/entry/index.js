@@ -30,7 +30,7 @@ export default function EntryPage() {
   const [non, setNon] = useState({ data: "", state: null });
 
   useEffect(() => {
-    //console.log("value", section);
+    console.log("value", section);
   }, [section]);
 
   useEffect(() => {
@@ -122,7 +122,6 @@ export default function EntryPage() {
 
   const fill = (obj) => {
     setCompany("Pernod Ricard Kenya");
-    setSection("");
     setPlastic({ data: obj.plastic, state: null });
     setMetal({ data: obj.metal, state: null });
     setPaper({ data: obj.paper, state: null });
