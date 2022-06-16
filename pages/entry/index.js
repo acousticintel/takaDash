@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 //custom func
 import { AuthGuard } from "../../components/elements/authGuard";
 import DropDown from "../../components/elements/dropDown";
-import { useData } from "../../context/dataContext";
+import { useData } from "../../context/dataContext";  
+import swal from '@sweetalert/with-react'
 //custom
 const FaEdit = dynamic(async () => (await import("react-icons/fa")).FaEdit);
 const BiRightArrow = dynamic(
@@ -192,10 +193,12 @@ export default function EntryPage() {
         .then((res) => {
           console.log(res);
           setLoading(false);
+          swal("Done!", "Update Complete!", "success");
           clear()
         })
         .catch((err) => {
           console.log(err);
+          swal("Sorry!", "Error whle updating!", "error");
         });
     }
   };

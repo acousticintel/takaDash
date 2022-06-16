@@ -58,6 +58,8 @@ export default function Profile({ userDataInit, companyDataInit }) {
     companyDataInit ? JSON.parse(companyDataInit) : {}
   );
 
+
+
   return (
     <AuthGuard>
       <motion.div
@@ -82,7 +84,7 @@ export default function Profile({ userDataInit, companyDataInit }) {
 export const getServerSideProps = async (context) => {
   try {
     const company = context.query.company ? context.query.company : "pernod";
-    const session = await getSession(context);
+
 
     let companyData = {};
     if (company) {
@@ -99,18 +101,8 @@ export const getServerSideProps = async (context) => {
       });
     }
 
-    let userData = {};
-    if (session?.user?.uid) {
-      const docRef = doc(db, "users", session?.user?.uid);
-      const docSnap = await getDoc(docRef);
-
-      if (docSnap.exists()) {
-        userData = docSnap.data();
-      }
-    }
     return {
       props: {
-        userDataInit: JSON.stringify(userData),
         companyDataInit: JSON.stringify(companyData),
       },
     };
