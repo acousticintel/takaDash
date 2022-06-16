@@ -7,7 +7,7 @@ export default function GraphSec() {
   return (
     <div className="dash__graphs">
       <div className="dash__graph">
-        <h1>Recycled Waste Types</h1>
+        <h1>Collected Waste Types</h1>
         <section>
           <div className="icon">
             <Image
@@ -90,7 +90,7 @@ export default function GraphSec() {
               <h5>Electronics </h5>
               <h6>2% - 28kg</h6>
             </div>
-            <ProgressBar color="red" value={2} />
+            <ProgressBar color="purple" value={2} />
           </div>
         </section>
         <section>
@@ -127,19 +127,6 @@ export default function GraphSec() {
             <ProgressBar color="red" value={38} />
           </div>
         </section>
-      </div>
-      <div className="flex justify-end">
-        <Link href="/breakdown">
-          <button className="btn btn-sm btn-ghost">See More</button>
-        </Link>
-      </div>
-      <div className="dash__linegraph">
-        <LineG />
-      </div>
-      <div className="flex justify-end">
-        <Link href="/breakdown">
-          <button className="btn btn-sm btn-ghost">See More</button>
-        </Link>
       </div>
     </div>
   );

@@ -1,0 +1,27 @@
+.entry__page{
+  @apply container mx-auto px-6 pt-6 pb-10 caret-black;
+}
+
+.entry__page .user{
+  @apply flex flex-col items-center;
+}
+
+.entry__page .user h1{
+  @apply mt-6 font-semibold text-3xl;
+}
+
+.entry__page input{
+  @apply bg-gray-50 text-center;
+}
+
+.entry__page .input-error-message{
+  @apply my-1 text-error text-sm text-center;
+}
+
+.entry__page .form__sec{
+  @apply flex flex-col items-center;
+}
+
+.entry__page .form__sec h1{
+  @apply text-2xl mt-6 font-medium; 
+}

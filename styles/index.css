@@ -1,27 +1,11 @@
-.profile-page {
-  @apply min-h-screen text-emerald-800 mx-auto
-  container  pt-10 px-5 md:px-20;
+.dash__page {
+  @apply container mx-auto px-6 pt-6;
 }
 
-
-.profile-page > .buttons-sec {
-  @apply flex justify-start my-3 gap-4;
+.dash__page > section {
+  @apply bg-white rounded-3xl px-6 py-10 my-6;
 }
 
-.profile-page > .buttons-sec > .button {
-  @apply mx-auto lg:mx-0 rounded-full my-6 py-4 px-8
-  text-emerald-700 hover:text-emerald-500 font-bold
-  focus:outline-none hover:border-emerald-700 transform transition 
-  hover:scale-105 duration-300 ease-in-out;
+.dash__page > section.clear {
+  @apply bg-transparent rounded-3xl px-6 py-10 my-6;
 }
-
-.profile-page > .buttons-sec > .button:first-child {
-  background: linear-gradient(315deg, #fffff7, #dee5d0);
-  box-shadow: -5px -5px 36px #bcc1b0, 5px 5px 36px #ffffff;
-}
-
-.profile-page > .buttons-sec > .button:last-child {
-  background: linear-gradient(45deg, #fffff7, #dee5d0);
-  box-shadow: 5px -5px 36px #bcc1b0, -5px 5px 36px #ffffff;
-}
-

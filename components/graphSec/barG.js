@@ -13,6 +13,7 @@ export default function BarG({ data }) {
             series={data.series}
             type="bar"
             width="100%"
+            height="350px"
           />
         )}
       </div>

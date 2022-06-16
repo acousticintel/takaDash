@@ -7,15 +7,15 @@ import { getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyApGswYFpK5orEtoRFcviKp23Udi4yIth0",
-  authDomain: "takacorewards.firebaseapp.com",
-  projectId: "takacorewards",
-  storageBucket: "takacorewards.appspot.com",
-  messagingSenderId: "1073100785333",
-  appId: "1:1073100785333:web:e0b7e78ade2104b86ba0fc"
+  apiKey: "AIzaSyBCnbXIdrT1EBTgPokvq7vyk_EcVggzE7g",
+  authDomain: "taka-679ba.firebaseapp.com",
+  projectId: "taka-679ba",
+  storageBucket: "taka-679ba.appspot.com",
+  messagingSenderId: "366151771708",
+  appId: "1:366151771708:web:d4c120910a7529a0fe0539"
 };
 
-// Initialize Firebase
+// Initialize Firebase  
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 const db = getFirestore(app);
 //const storage = getStorage(app);

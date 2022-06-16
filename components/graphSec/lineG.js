@@ -3,6 +3,7 @@ import dynamic from "next/dynamic";
 
 export default function LineG() {
   const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
+  
   const [data, setData] = useState({
     series: [
       {
@@ -36,7 +37,7 @@ export default function LineG() {
     ],
     options: {
       title: {
-        text: "Waste Type Weights",
+        text: "Total Waste Collected by Category",
       },
       chart: {
         height: "100%",
@@ -45,6 +46,7 @@ export default function LineG() {
       dataLabels: {
         enabled: false,
       },
+      colors: ['#14b8a6', '#f97316', '#facc15','#3b82f6', '#a855f7', '#64748b', '#ef4444'],
       stroke: {
         curve: "smooth",
       },
@@ -55,6 +57,11 @@ export default function LineG() {
         x: {
           format: "MMM",
         },
+      },
+      legend: {
+        position: "top",
+        horizontalAlign: "center",
+        offsetX: 40,
       },
     },
   });
@@ -68,6 +75,7 @@ export default function LineG() {
             series={data.series}
             type="area"
             width="100%"
+            height="350px"
           />
         )}
       </div>

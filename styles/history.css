@@ -1,5 +1,5 @@
-.history-page {
-  @apply min-h-screen text-gray-800 pt-8 px-4 pb-8;
+.history__page {
+  @apply container mx-auto px-6 pt-6;
 }
 
 .history-page > section {

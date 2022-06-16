@@ -42,18 +42,21 @@ const slideVar = {
   },
 };
 
-export default function Title({ title }) {
+export default function Title({ title, light }) {
   return (
     <motion.div
       variants={contVar}
       initial="hide"
       animate="show"
-      className="flex relative"
+      className="flex relative max-w-fit mx-auto"
     >
       <motion.div variants={scaleVar} className="absolute -bottom-2 -left-3">
         <Image src="/assets/leaf.webp" height={20} width={35} />
       </motion.div>
-      <motion.span variants={slideVar} className="text-2xl text-green-600 ml-5">
+      <motion.span
+        variants={slideVar}
+        className="text-2xl capitalize ml-5 font-semibold text-teal-700"
+      >
         {title}
       </motion.span>
     </motion.div>

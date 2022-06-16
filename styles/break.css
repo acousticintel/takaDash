@@ -1,9 +1,23 @@
 .breakdown__page{
-  @apply container mx-auto px-6 pt-6 gap-6
-  grid grid-cols-1 lg:grid-cols-2;
+  @apply container mx-auto px-6 pt-6;
 }
 
 .breakdown__page > section{
-  min-width: 500px;
+  @apply my-10 grid gap-6 grid-cols-1 lg:grid-cols-2;
+}
+
+.breakdown__page > section.single{
+  @apply grid-cols-1;
+}
+
+.breakdown__page > section > div{
   @apply bg-white rounded-3xl p-8 overflow-hidden;
+}
+
+.breakdown__page > h1{
+  @apply text-2xl font-bold text-center;
+}
+
+.breakdown__page > p{
+  @apply text-gray-500 font-medium text-center;
 }

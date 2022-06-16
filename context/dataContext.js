@@ -4,8 +4,13 @@ import { useSession } from "next-auth/react";
 import { db } from "../firebase";
 import {
   doc,
+  query,
+  where,
+  addDoc, 
   setDoc,
   getDoc,
+  getDocs,
+  collection,
 } from "@firebase/firestore";
 
 const dataContext = createContext();
@@ -23,6 +28,7 @@ function useProvideData() {
   const { data: session, status } = useSession();
   //hold app states
   const [side, setSide] = useState(false);
+  const [userData, setUserData] = useState(null);
 
   const onSetSide = (val) => setSide(val);
 
@@ -46,5 +52,47 @@ function useProvideData() {
     }
   }
 
-  return { side, onSetSide };
+  async function updateWasteProfile(companyid, eventId, section, waste) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const eventSecRef = collection(db, "wasteProfiles", companyid, "events", eventId, "sections");
+
+        const q = query(eventSecRef, where("section", "==", section));
+
+        const querySnapshot = await getDocs(q);
+        if (!querySnapshot.empty) {
+          querySnapshot.forEach((docSnap) => {
+            //merge data into section
+            const docRef = doc(db, "wasteProfiles", companyid, "events", eventId, "sections", docSnap.id);
+
+            setDoc(docRef, waste, { merge: true })
+              .then(() => {
+                resolve("success");
+              })
+              .catch((error) => {
+                reject(error);
+              });
+          });
+        } else {
+          //add new section to database
+          const docRef = collection(db, "wasteProfiles", companyid  , "events", eventId, "sections");
+
+          addDoc(docRef, {
+            section,
+            ...waste,
+          })
+            .then(() => {
+              resolve("success");
+            })
+            .catch((error) => {
+              reject(error);
+            });
+        }
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  return { userData, updateWasteProfile, side, onSetSide };
 }

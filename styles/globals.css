@@ -6,7 +6,10 @@
 @import "./break.css";
 @import "./banner.css";
 @import "./stats.css";
+@import "./events.css";
 @import "./graphSec.css";
+@import "./history.css";
+@import "./entry.css";
 
 @tailwind base;
 @tailwind components;

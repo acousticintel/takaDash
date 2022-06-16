@@ -1,37 +1,33 @@
 .dash__graphs{
-  @apply grid grid-cols-1 gap-6 my-5 w-full;
+  @apply grid gap-6 w-full;
 }
 
-.dash__graph{
-  @apply bg-white pt-8 pb-4 pl-4 md:pl-8  pr-5 md:pr-10 rounded-xl 
-  w-full overflow-hidden;
+.dash__graphs .dash__graph{
+  @apply rounded-xl w-full overflow-hidden;
 }
-
-.dash__linegraph{
-  min-width: 350px;
-  @apply bg-white py-4 px-8  pr-10 rounded-xl overflow-hidden;
-}
-
 
 .dash__graph h1{
-  @apply text-xl font-bold;
+  @apply text-sm text-gray-500;
 }
 
 .dash__graph .icon{
-  @apply relative w-16 h-16 px-10;
+  @apply relative w-12 h-12 px-10;
 }
 
 .dash__graph h5{
-  @apply ml-2 text-lg text-gray-500;
+  @apply ml-2 text-gray-500;
 }
 
-
 .dash__graph h6{
-  @apply ml-2 text-sm text-gray-400;
+  @apply ml-2 text-gray-400 truncate; ;
 }
 
 .dash__graph section{
-  @apply flex border-b border-gray-200 py-4;
+  @apply flex items-center border-b rounded-none border-gray-200 py-3;
+}
+
+.dash__graph .collapse-title {
+  @apply flex;
 }
 
 .dash__graph section:last-child{

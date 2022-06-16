@@ -7,7 +7,7 @@ const progressVar = {
     width: 0,
   },
   show: (w)=>({
-    width: `${w + 30}%`,
+    width: `${w + 0}%`,
     transition: {
       delay: 0.01 * w,
       type: "spring",
