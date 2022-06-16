@@ -83,43 +83,6 @@ export default function EntryPage() {
     }
   };
 
-  const isValidated = () => {
-    if (
-      section.state === "success" &&
-      plastic.state === "success" &&
-      metal.state === "success" &&
-      paper.state === "success" &&
-      glass.state === "success" &&
-      organic.state === "success" &&
-      non.state === "success"
-    ) {
-      return true;
-    } else {
-      if (section.state !== "success") {
-        setSection({ ...section, state: "error" });
-      }
-      if (plastic.state !== "success") {
-        setPlastic({ ...plastic, state: "error" });
-      }
-      if (metal.state !== "success") {
-        setMetal({ ...metal, state: "error" });
-      }
-      if (paper.state !== "success") {
-        setPaper({ ...paper, state: "error" });
-      }
-      if (glass.state !== "success") {
-        setGlass({ ...glass, state: "error" });
-      }
-      if (organic.state !== "success") {
-        setOrganic({ ...organic, state: "error" });
-      }
-      if (non.state !== "success") {
-        setNon({ ...non, state: "error" });
-      }
-      return false;
-    }
-  };
-
   const fill = (obj) => {
     setCompany("Pernod Ricard Kenya");
     setPlastic({ data: obj.plastic, state: null });
@@ -144,7 +107,7 @@ export default function EntryPage() {
   const handleData = async (e) => {
     e.preventDefault();
     setLoading(true);
-    if (isValidated()) {
+//validate()
       let obj = {
         plastic: Number(plastic.data.trim()),
         metal: Number(metal.data.trim()),
@@ -177,10 +140,7 @@ export default function EntryPage() {
           console.log(err);
           swal("Sorry!", "Error whle updating!", "error");
         });
-    } else {
-      setLoading(false);
-      swal("Sorry!", "Please fill all the fields!", "error");
-    }
+    
   };
 
   return (

@@ -3,7 +3,7 @@
 }
 
 .recent__events > .list{
-  @apply flex gap-6 py-6;
+  @apply grid grid-cols-1 md:grid-cols-2 gap-6 py-6;
 }
 
 .recent__events > .list > .event {
