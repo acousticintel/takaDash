@@ -86,12 +86,12 @@ export default function Profile({ userDataInit, companyDataInit }) {
   }, [company]);
 
   useEffect(() => {
-    let userData = {};
+    let u = {};
     if (session?.user?.uid) {
       const docRef = doc(db, "users", session?.user?.uid);
       getDoc(docRef).then((doc) => {
-        userData = { ...doc.data(), id: doc.id };
-        setUserData(userData);
+        u = { ...doc.data(), id: doc.id };
+        setUserData(u);
       });
     }
   }, [session]);

@@ -1,17 +1,17 @@
-import { collection, getDocs } from "firebase/firestore";
+import { collection, doc, getDocs, getDoc } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
+import { format } from "date-fns";
 import { AuthGuard } from "../../components/elements/authGuard";
 import EventG from "../../components/graphSec/eventG";
 import EventsStats from "../../components/stats/eventStats";
 import { db } from "../../firebase";
 
-export default function EventPage({ sectionsInit }) {
+export default function EventPage({}) {
   const router = useRouter();
   const info = router.query.info;
-  const [sections, setSections] = useState(
-    sectionsInit ? JSON.parse(sectionsInit) : []
-  );
+  const [sections, setSections] = useState([]);
+  const [eventData, setEventData] = useState({});
   const [total, setTotal] = useState(0);
 
   function sumObjectsByKey(...objs) {
@@ -47,6 +47,23 @@ export default function EventPage({ sectionsInit }) {
   }, [info]);
 
   useEffect(() => {
+    let e = {};
+    if (info) {
+      const { company, event } = JSON.parse(info);
+
+      const docRef = doc(db, "wasteProfiles", company, "events", event);
+      getDoc(docRef).then((doc) => {
+        e = {
+          ...doc.data(),
+          id: doc.id,
+          timestamp: doc.data().timestamp.toDate(),
+        };
+        setEventData(e);
+      });
+    }
+  }, [info]);
+
+  useEffect(() => {
     if (sections.length > 0) {
       let t = sumObjectsByKey(...sections);
       delete t.section;
@@ -61,11 +78,16 @@ export default function EventPage({ sectionsInit }) {
           <>
             <div className="detail">
               {" "}
-              <span>Date: </span> <h6>Saturday, 21st May 2022</h6>
+              <span>Date: </span>{" "}
+              <h6>
+                {eventData.timestamp
+                  ? format(eventData.timestamp, "EEE do MMM yyyy")
+                  : ""}
+              </h6>
             </div>
             <div className="detail">
               {" "}
-              <span>Venue: </span> <h6>Carnivore Grounds</h6>
+              <span>Venue: </span> <h6>{eventData.location}</h6>
             </div>
           </>
           <>
