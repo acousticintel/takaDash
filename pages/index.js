@@ -81,7 +81,7 @@ export default function Profile({ userDataInit, companyDataInit }) {
 
 export const getServerSideProps = async (context) => {
   try {
-    const company = context.query.company || "pernod";
+    const company = context.query.company ? context.query.company : "pernod";
     const session = await getSession(context);
 
     let companyData = {};
