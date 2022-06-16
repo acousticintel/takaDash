@@ -6,29 +6,9 @@ import { db } from "../../firebase";
 //custom
 import Title from "../elements/title";
 
-export default function Recent({ company }) {
-  const [events, setEvents] = useState([]);
-
+export default function Recent({ events, company }) {
   useEffect(() => {
-    if (company?.id) {
-      console.log("company id", company);
-      //firebase listener for user data
-      const q = query(
-        collection(db, "wasteProfiles", company.id, "events"),
-        where("name", "!=", null)
-      );
-      return onSnapshot(q, (querySnapshot) => {
-        const e = [];
-        querySnapshot.forEach((doc) => {
-          e.push({ ...doc.data(), id: doc.id });
-        });
-        setEvents(e);
-      });
-    }
-  }, [db, company]);
-
-  useEffect(() => {
-    console.log("events", events);
+    //console.log("events", events);
   }, [events]);
 
   return (
@@ -37,8 +17,13 @@ export default function Recent({ company }) {
       <div className="list">
         {events?.length > 0 &&
           events.map((event) => (
-            
-            <Link href={`events/event?info=${JSON.stringify({company: company.id, event:event.id})}`} key={event.id}>
+            <Link
+              href={`events/event?info=${JSON.stringify({
+                company: company.id,
+                event: event.id,
+              })}`}
+              key={event.id}
+            >
               <div className="event">
                 <div className="event__img">
                   <Image

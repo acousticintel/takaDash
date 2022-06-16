@@ -1,9 +1,7 @@
 import { useRouter } from "next/router";
 //custom pack
 import { motion } from "framer-motion";
-import { getSession, useSession } from "next-auth/react";
-//custom func
-import { AuthGuard } from "../components/elements/authGuard";
+import { useSession } from "next-auth/react";
 //custom
 import Stats from "../components/stats/totalStats";
 import LineG from "../components/graphSec/lineG";
@@ -14,6 +12,7 @@ import {
   doc,
   getDoc,
   getDocs,
+  onSnapshot,
   limit,
   query,
   collection,
@@ -55,7 +54,7 @@ export default function Profile({ userDataInit, companyDataInit }) {
   const [userData, setUserData] = useState({});
   const [companyData, setCompanyData] = useState({});
 
-  const [eventData, setEventData] = useState({});
+  const [eventsData, setEventsData] = useState({});
   const [total, setTotal] = useState(0);
 
   function sumObjectsByKey(...objs) {
@@ -67,9 +66,7 @@ export default function Profile({ userDataInit, companyDataInit }) {
     }, {});
   }
 
-  useEffect(() => {
-    let c = {};
-    console.log("company", company);
+  const getCompanyData = async (company) => {
     const q = query(
       collection(db, "wasteProfiles"),
       where("name", "==", company ? company : "pernod"),
@@ -77,12 +74,35 @@ export default function Profile({ userDataInit, companyDataInit }) {
     );
 
     getDocs(q).then((querySnapshot) => {
+      let c = {};
       querySnapshot.forEach((doc) => {
         c = { ...doc.data(), id: doc.id };
       });
 
       setCompanyData(c);
     });
+  };
+
+  const getEventData = async (companyData) => {
+    if (companyData?.id) {
+      //firebase listener for user data
+      const q = query(
+        collection(db, "wasteProfiles", companyData.id, "events"),
+        where("name", "!=", null)
+      );
+      return onSnapshot(q, (querySnapshot) => {
+        const e = [];
+        querySnapshot.forEach((doc) => {
+          e.push({ ...doc.data(), id: doc.id });
+        });
+        setEventsData(e);
+      });
+    }
+  };
+
+  useEffect(() => {
+    //console.log("company", company);
+    getCompanyData(company);
   }, [company]);
 
   useEffect(() => {
@@ -97,56 +117,38 @@ export default function Profile({ userDataInit, companyDataInit }) {
   }, [session]);
 
   useEffect(() => {
-    console.log("companyData", companyData);
-    if (companyData?.id) {
-      const q = query(
-        collection(db, "wasteProfiles", companyData.id, "events"),
-        where("name", "!=", "")
-      );
-
-      getDocs(q).then((querySnapshot) => {
-        let e = [];
-        querySnapshot.forEach((doc) => {
-          companyData = { ...doc.data(), id: doc.id };
-        });
-
-        setEventData(e);
-      });
-    }
+    //console.log("company", companyData);
+    getEventData(companyData);
   }, [companyData]);
 
   useEffect(() => {
-    console.log("eventData", eventData);
-  }, [eventData]);
+    //console.log("eventData", eventsData);
+  }, [eventsData]);
 
   useEffect(() => {
-    if (eventData?.length > 0) {
-      let t = sumObjectsByKey(...eventData);
-      delete t.section;
+    if (eventsData?.length > 0) {
+      let t = sumObjectsByKey(...eventsData);
       console.log("t", t);
       setTotal(t);
     }
-  }, [eventData]);
+  }, [eventsData]);
 
   return (
-    <AuthGuard>
-      <motion.div
-        className="dash__page"
-        variants={contVar}
-        initial="hide"
-        animate="show"
-      >
-        <motion.h5 variants={riseVar}>Hello {session?.user.name}</motion.h5>
-        {(userData?.role === "admin" ||
-          userData?.company?.name === "pernod") && (
-          <Recent company={companyData} />
-        )}
-        <Stats />
-        <Categories />
-        <section className="dash__linegraph">
-          <LineG />
-        </section>
-      </motion.div>
-    </AuthGuard>
+    <motion.div
+      className="dash__page"
+      variants={contVar}
+      initial="hide"
+      animate="show"
+    >
+      <motion.h5 variants={riseVar}>Hello {session?.user.name}</motion.h5>
+      {(userData?.role === "admin" || userData?.company?.name === "pernod") && (
+        <Recent events={eventsData} company={companyData} />
+      )}
+      <Stats total={total?.total} non={total?.non}/>
+      <Categories />
+      <section className="dash__linegraph">
+        <LineG />
+      </section>
+    </motion.div>
   );
 }

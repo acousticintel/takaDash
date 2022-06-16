@@ -29,13 +29,9 @@ export default function EntryPage() {
   const [organic, setOrganic] = useState({ data: "", state: null });
   const [non, setNon] = useState({ data: "", state: null });
 
-  useEffect(() => {
-    console.log("value", section);
-  }, [section]);
 
   useEffect(() => {
     let c = {};
-    console.log("section", section);
     if (section?.data) {
       const q = query(
         collection(
@@ -107,40 +103,39 @@ export default function EntryPage() {
   const handleData = async (e) => {
     e.preventDefault();
     setLoading(true);
-//validate()
-      let obj = {
-        plastic: Number(plastic.data.trim()),
-        metal: Number(metal.data.trim()),
-        paper: Number(paper.data.trim()),
-        glass: Number(glass.data.trim()),
-        organic: Number(organic.data.trim()),
-        non: Number(non.data.trim()),
-        total:
-          Number(plastic.data.trim()) +
-          Number(metal.data.trim()) +
-          Number(paper.data.trim()) +
-          Number(glass.data.trim()) +
-          Number(organic.data.trim()) +
-          Number(non.data.trim()),
-      };
+    //validate()
+    let obj = {
+      plastic: Number(plastic?.data !== "" ? plastic.data : 0),
+      metal: Number(metal?.data !== "" ? metal.data : 0),
+      paper: Number(paper?.data !== "" ? paper.data : 0),
+      glass: Number(glass?.data !== "" ? glass.data : 0),
+      organic: Number(organic?.data !== "" ? organic.data : 0),
+      non: Number(non?.data !== "" ? non.data : 0),
+      total:
+        Number(plastic?.data !== "" ? plastic.data : 0) +
+        Number(metal?.data !== "" ? metal.data : 0) +
+        Number(paper?.data !== "" ? paper.data : 0) +
+        Number(glass?.data !== "" ? glass.data : 0) +
+        Number(organic?.data !== "" ? organic.data : 0) +
+        Number(non?.data ? non.data : 0),
+    };
 
-      updateWasteProfile(
-        "tI10yyei4ObyOQC9Txqd",
-        "v99YlQ1WbMfeUewLfe7V",
-        section.data,
-        obj
-      )
-        .then((res) => {
-          console.log(res);
-          setLoading(false);
-          swal("Done!", "Update Complete!", "success");
-          clear();
-        })
-        .catch((err) => {
-          console.log(err);
-          swal("Sorry!", "Error whle updating!", "error");
-        });
-    
+    updateWasteProfile(
+      "tI10yyei4ObyOQC9Txqd",
+      "v99YlQ1WbMfeUewLfe7V",
+      section.data,
+      obj
+    )
+      .then((res) => {
+        console.log(res);
+        setLoading(false);
+        swal("Done!", "Update Complete!", "success");
+        clear();
+      })
+      .catch((err) => {
+        console.log(err);
+        swal("Sorry!", "Error whle updating!", "error");
+      });
   };
 
   return (
