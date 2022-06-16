@@ -49,6 +49,7 @@ const riseVar = {
 
 export default function Profile({ userDataInit, companyDataInit }) {
   const router = useRouter();
+  const { company } = router.query;
   const { data: session } = useSession();
 
   const [userData, setUserData] = useState(
@@ -57,6 +58,35 @@ export default function Profile({ userDataInit, companyDataInit }) {
   const [companyData, setCompanyData] = useState(
     companyDataInit ? JSON.parse(companyDataInit) : {}
   );
+
+  useEffect(() => {
+    let companyData = {};
+    console.log("company", company);
+    const q = query(
+      collection(db, "wasteProfiles"),
+      where("name", "==", company ? company : "pernod"),
+      limit(1)
+    );
+
+    getDocs(q).then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        companyData = { ...doc.data(), id: doc.id };
+      });
+
+      setCompanyData(companyData);
+    });
+  }, [company]);
+
+  useEffect(() => {
+    let userData = {};
+    if (session?.user?.uid) {
+      const docRef = doc(db, "users", session?.user?.uid);
+      getDoc(docRef).then((doc) => {
+        userData = { ...doc.data(), id: doc.id };
+        setUserData(userData);
+      });
+    }
+  }, [session]);
 
   return (
     <AuthGuard>
@@ -68,7 +98,9 @@ export default function Profile({ userDataInit, companyDataInit }) {
       >
         <motion.h5 variants={riseVar}>Hello {session?.user.name}</motion.h5>
         {(userData?.role === "admin" ||
-          userData?.company?.name === "pernod") && <Recent company={companyData}/>}
+          userData?.company?.name === "pernod") && (
+          <Recent company={companyData} />
+        )}
         <Stats />
         <Categories />
         <section className="dash__linegraph">

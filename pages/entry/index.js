@@ -1,4 +1,4 @@
-import dynamic from "next/dynamic";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 //custom func
 import { AuthGuard } from "../../components/elements/authGuard";
@@ -198,7 +198,7 @@ export default function EntryPage() {
         <section className="user">
           <div className="avatar">
             <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-              <img src="https://api.lorem.space/image/face?hash=3174" />
+              <Image src="/assets/pernod.png" layout="fill"/>
             </div>
           </div>
           <h1>Pernod Ricard Kenya</h1>
