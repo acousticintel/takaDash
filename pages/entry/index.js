@@ -3,9 +3,10 @@ import { useEffect, useState } from "react";
 //custom func
 import { AuthGuard } from "../../components/elements/authGuard";
 import DropDown from "../../components/elements/dropDown";
-import { useData } from "../../context/dataContext";  
-import swal from 'sweetalert';
-
+import { useData } from "../../context/dataContext";
+import swal from "sweetalert";
+import { query, collection, where, limit, getDocs } from "firebase/firestore";
+import { db } from "../../firebase";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -19,18 +20,11 @@ export default function EntryPage() {
   const [company, setCompany] = useState("Pernod Ricard Kenya");
   const [section, setSection] = useState("");
   //plastics
-  const [pet, setPet] = useState({ data: "", state: null });
-  const [lpde, setLpde] = useState({ data: "", state: null });
-  const [hpde, setHpde] = useState({ data: "", state: null });
-  const [pp, setPp] = useState({ data: "", state: null });
-  const [ps, setPs] = useState({ data: "", state: null });
+  const [plastic, setPlastic] = useState({ data: "", state: null });
   //metal
-  const [foil, setFoil] = useState({ data: "", state: null });
-  const [cans, setCans] = useState({ data: "", state: null });
+  const [metal, setMetal] = useState({ data: "", state: null });
   //paper
-  const [tetra, setTetra] = useState({ data: "", state: null });
-  const [cartons, setCartons] = useState({ data: "", state: null });
-  //single
+  const [paper, setPaper] = useState({ data: "", state: null });
   const [glass, setGlass] = useState({ data: "", state: null });
   const [organic, setOrganic] = useState({ data: "", state: null });
   const [non, setNon] = useState({ data: "", state: null });
@@ -39,9 +33,35 @@ export default function EntryPage() {
     //console.log("value", section);
   }, [section]);
 
+  useEffect(() => {
+    let c = {};
+    console.log("section", section);
+    if (section?.data) {
+      const q = query(
+        collection(
+          db,
+          "wasteProfiles",
+          "tI10yyei4ObyOQC9Txqd",
+          "events",
+          "PKhGF843RE4eyHGTldrn",
+          "sections"
+        ),
+        where("section", "==", section.data),
+        limit(1)
+      );
+
+      getDocs(q).then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          c = { ...doc.data(), id: doc.id };
+        });
+        fill(c);
+      });
+    }
+  }, [db, section]);
+
   // function that verifies if value contains only numbers
   const verifyNumber = (value) => {
-    var numberRex = new RegExp("^[0-9]+$");
+    var numberRex = new RegExp("^[+-]?([0-9]+.?[0-9]*|.[0-9]+)$");
     if (numberRex.test(value) || value?.length === 0) {
       return true;
     }
@@ -66,15 +86,9 @@ export default function EntryPage() {
   const isValidated = () => {
     if (
       section.state === "success" &&
-      pet.state === "success" &&
-      lpde.state === "success" &&
-      hpde.state === "success" &&
-      pp.state === "success" &&
-      ps.state === "success" &&
-      foil.state === "success" &&
-      cans.state === "success" &&
-      tetra.state === "success" &&
-      cartons.state === "success" &&
+      plastic.state === "success" &&
+      metal.state === "success" &&
+      paper.state === "success" &&
       glass.state === "success" &&
       organic.state === "success" &&
       non.state === "success"
@@ -84,32 +98,14 @@ export default function EntryPage() {
       if (section.state !== "success") {
         setSection({ ...section, state: "error" });
       }
-      if (pet.state !== "success") {
-        setPet({ ...pet, state: "error" });
+      if (plastic.state !== "success") {
+        setPlastic({ ...plastic, state: "error" });
       }
-      if (lpde.state !== "success") {
-        setLpde({ ...lpde, state: "error" });
+      if (metal.state !== "success") {
+        setMetal({ ...metal, state: "error" });
       }
-      if (hpde.state !== "success") {
-        setHpde({ ...hpde, state: "error" });
-      }
-      if (pp.state !== "success") {
-        setPp({ ...pp, state: "error" });
-      }
-      if (ps.state !== "success") {
-        setPs({ ...ps, state: "error" });
-      }
-      if (foil.state !== "success") {
-        setFoil({ ...foil, state: "error" });
-      }
-      if (cans.state !== "success") {
-        setCans({ ...cans, state: "error" });
-      }
-      if (tetra.state !== "success") {
-        setTetra({ ...tetra, state: "error" });
-      }
-      if (cartons.state !== "success") {
-        setCartons({ ...cartons, state: "error" });
+      if (paper.state !== "success") {
+        setPaper({ ...paper, state: "error" });
       }
       if (glass.state !== "success") {
         setGlass({ ...glass, state: "error" });
@@ -124,50 +120,43 @@ export default function EntryPage() {
     }
   };
 
+  const fill = (obj) => {
+    setCompany("Pernod Ricard Kenya");
+    setSection("");
+    setPlastic({ data: obj.plastic, state: null });
+    setMetal({ data: obj.metal, state: null });
+    setPaper({ data: obj.paper, state: null });
+    setGlass({ data: obj.glass, state: null });
+    setOrganic({ data: obj.organic, state: null });
+    setNon({ data: obj.non, state: null });
+  };
+
   const clear = () => {
     setCompany("Pernod Ricard Kenya");
     setSection("");
-    setPet({ data: "", state: null });
-    setLpde({ data: "", state: null });
-    setHpde({ data: "", state: null });
-    setPp({ data: "", state: null });
-    setPs({ data: "", state: null });
-    setFoil({ data: "", state: null });
-    setCans({ data: "", state: null });
-    setTetra({ data: "", state: null });
-    setCartons({ data: "", state: null });
+    setPlastic({ data: "", state: null });
+    setMetal({ data: "", state: null });
+    setPaper({ data: "", state: null });
     setGlass({ data: "", state: null });
     setOrganic({ data: "", state: null });
     setNon({ data: "", state: null });
-  }
+  };
 
   const handleData = async (e) => {
     e.preventDefault();
     setLoading(true);
     if (isValidated()) {
       let obj = {
-        pet: Number(pet.data.trim()),
-        lpde: Number(lpde.data.trim()),
-        hpde: Number(hpde.data.trim()),
-        pp: Number(pp.data.trim()),
-        ps: Number(ps.data.trim()),
-        foil: Number(foil.data.trim()),
-        cans: Number(cans.data.trim()),
-        tetra: Number(tetra.data.trim()),
-        cartons: Number(cartons.data.trim()),
+        plastic: Number(plastic.data.trim()),
+        metal: Number(metal.data.trim()),
+        paper: Number(paper.data.trim()),
         glass: Number(glass.data.trim()),
         organic: Number(organic.data.trim()),
         non: Number(non.data.trim()),
         total:
-          Number(pet.data.trim()) +
-          Number(lpde.data.trim()) +
-          Number(hpde.data.trim()) +
-          Number(pp.data.trim()) +
-          Number(ps.data.trim()) +
-          Number(foil.data.trim()) +
-          Number(cans.data.trim()) +
-          Number(tetra.data.trim()) +
-          Number(cartons.data.trim()) +
+          Number(plastic.data.trim()) +
+          Number(metal.data.trim()) +
+          Number(paper.data.trim()) +
           Number(glass.data.trim()) +
           Number(organic.data.trim()) +
           Number(non.data.trim()),
@@ -183,12 +172,15 @@ export default function EntryPage() {
           console.log(res);
           setLoading(false);
           swal("Done!", "Update Complete!", "success");
-          clear()
+          clear();
         })
         .catch((err) => {
           console.log(err);
           swal("Sorry!", "Error whle updating!", "error");
         });
+    } else {
+      setLoading(false);
+      swal("Sorry!", "Please fill all the fields!", "error");
     }
   };
 
@@ -198,7 +190,7 @@ export default function EntryPage() {
         <section className="user">
           <div className="avatar">
             <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-              <Image src="/assets/pernod.png" layout="fill"/>
+              <Image src="/assets/pernod.png" layout="fill" />
             </div>
           </div>
           <h1>Pernod Ricard Kenya</h1>
@@ -232,178 +224,70 @@ export default function EntryPage() {
             </div>
           </div>
           <h1>Plastics</h1>
-          <div className="grid gap-6 grid-cols-2 sm:grid-cols-3 ">
+          <div className="grid gap-6 grid-cols-1 w-full md:w-2/3 lg:w-3/5">
             <div className="form-control w-full">
               <label className="label">
-                <span className="label-text">PET</span>
+                <span className="label-text">Plastics</span>
               </label>
               <input
                 type="text"
-                value={pet.data}
+                value={plastic.data}
                 placeholder="Type here"
-                onChange={(event) => change(event, setPet)}
+                onChange={(event) => change(event, setPlastic)}
                 className={classNames(
                   "input input-bordered w-full focus:bg-white",
-                  pet.state === "error" ? "input-error" : "input-primary"
+                  plastic.state === "error" ? "input-error" : "input-primary"
                 )}
               />
-              {pet.state === "error" && (
-                <span className="input-error-message">{pet.mess}</span>
-              )}
-            </div>
-            <div className="form-control w-full">
-              <label className="label">
-                <span className="label-text">LDPE</span>
-              </label>
-              <input
-                type="text"
-                value={lpde.data}
-                placeholder="Type here"
-                onChange={(event) => change(event, setLpde)}
-                className={classNames(
-                  "input input-bordered w-full focus:bg-white",
-                  lpde.state === "error" ? "input-error" : "input-primary"
-                )}
-              />
-              {lpde.state === "error" && (
-                <span className="input-error-message">{lpde.mess}</span>
-              )}
-            </div>
-            <div className="form-control w-full">
-              <label className="label">
-                <span className="label-text">HDPE</span>
-              </label>
-              <input
-                type="text"
-                value={hpde.data}
-                placeholder="Type here"
-                onChange={(event) => change(event, setHpde)}
-                className={classNames(
-                  "input input-bordered w-full focus:bg-white",
-                  hpde.state === "error" ? "input-error" : "input-primary"
-                )}
-              />
-              {hpde.state === "error" && (
-                <span className="input-error-message">{hpde.mess}</span>
-              )}
-            </div>
-            <div className="form-control w-full">
-              <label className="label">
-                <span className="label-text">PP</span>
-              </label>
-              <input
-                type="text"
-                value={pp.data}
-                placeholder="Type here"
-                onChange={(event) => change(event, setPp)}
-                className={classNames(
-                  "input input-bordered w-full focus:bg-white",
-                  pp.state === "error" ? "input-error" : "input-primary"
-                )}
-              />
-              {pp.state === "error" && (
-                <span className="input-error-message">{pp.mess}</span>
-              )}
-            </div>
-            <div className="form-control w-full">
-              <label className="label">
-                <span className="label-text">PS</span>
-              </label>
-              <input
-                type="text"
-                value={ps.data}
-                placeholder="Type here"
-                onChange={(event) => change(event, setPs)}
-                className={classNames(
-                  "input input-bordered w-full focus:bg-white",
-                  ps.state === "error" ? "input-error" : "input-primary"
-                )}
-              />
-              {ps.state === "error" && (
-                <span className="input-error-message">{ps.mess}</span>
+              {plastic.state === "error" && (
+                <span className="input-error-message">{plastic.mess}</span>
               )}
             </div>
           </div>
           <h1>Metal</h1>
-          <div className="grid gap-6 grid-cols-2 ">
+          <div className="grid gap-6 grid-cols-1 w-full md:w-2/3 lg:w-3/5">
             <div className="form-control w-full">
               <label className="label">
-                <span className="label-text">Foil</span>
+                <span className="label-text">Metal</span>
               </label>
               <input
                 type="text"
-                value={foil.data}
+                value={metal.data}
                 placeholder="Type here"
-                onChange={(event) => change(event, setFoil)}
+                onChange={(event) => change(event, setMetal)}
                 className={classNames(
                   "input input-bordered w-full focus:bg-white",
-                  foil.state === "error" ? "input-error" : "input-primary"
+                  metal.state === "error" ? "input-error" : "input-primary"
                 )}
               />
-              {foil.state === "error" && (
-                <span className="input-error-message">{foil.mess}</span>
-              )}
-            </div>
-            <div className="form-control w-full">
-              <label className="label">
-                <span className="label-text">Cans</span>
-              </label>
-              <input
-                type="text"
-                value={cans.data}
-                placeholder="Type here"
-                onChange={(event) => change(event, setCans)}
-                className={classNames(
-                  "input input-bordered w-full focus:bg-white",
-                  cans.state === "error" ? "input-error" : "input-primary"
-                )}
-              />
-              {cans.state === "error" && (
-                <span className="input-error-message">{cans.mess}</span>
+              {metal.state === "error" && (
+                <span className="input-error-message">{metal.mess}</span>
               )}
             </div>
           </div>
           <h1>Paper</h1>
-          <div className="grid gap-6 grid-cols-2 ">
+          <div className="grid gap-6 grid-cols-1 w-full md:w-2/3 lg:w-3/5">
             <div className="form-control w-full">
               <label className="label">
-                <span className="label-text">Tetra Pack</span>
+                <span className="label-text">Paper</span>
               </label>
               <input
                 type="text"
-                value={tetra.data}
+                value={paper.data}
                 placeholder="Type here"
-                onChange={(event) => change(event, setTetra)}
+                onChange={(event) => change(event, setPaper)}
                 className={classNames(
                   "input input-bordered w-full focus:bg-white",
-                  tetra.state === "error" ? "input-error" : "input-primary"
+                  paper.state === "error" ? "input-error" : "input-primary"
                 )}
               />
-              {tetra.state === "error" && (
-                <span className="input-error-message">{tetra.mess}</span>
-              )}
-            </div>
-            <div className="form-control w-full">
-              <label className="label">
-                <span className="label-text">Cartons</span>
-              </label>
-              <input
-                type="text"
-                value={cartons.data}
-                placeholder="Type here"
-                onChange={(event) => change(event, setCartons)}
-                className={classNames(
-                  "input input-bordered w-full focus:bg-white",
-                  cartons.state === "error" ? "input-error" : "input-primary"
-                )}
-              />
-              {cartons.state === "error" && (
-                <span className="input-error-message">{cartons.mess}</span>
+              {paper.state === "error" && (
+                <span className="input-error-message">{paper.mess}</span>
               )}
             </div>
           </div>
           <h1>Glass</h1>
-          <div className="grid gap-6 grid-cols-1 ">
+          <div className="grid gap-6 grid-cols-1 w-full md:w-2/3 lg:w-3/5">
             <div className="form-control w-full">
               <label className="label">
                 <span className="label-text">Glass</span>
@@ -424,7 +308,7 @@ export default function EntryPage() {
             </div>
           </div>
           <h1>Organic</h1>
-          <div className="grid gap-6 grid-cols-1 ">
+          <div className="grid gap-6 grid-cols-1 w-full md:w-2/3 lg:w-3/5">
             <div className="form-control w-full">
               <label className="label">
                 <span className="label-text">Organic</span>
@@ -445,7 +329,7 @@ export default function EntryPage() {
             </div>
           </div>
           <h1>Non Recyclable</h1>
-          <div className="grid gap-6 grid-cols-1 ">
+          <div className="grid gap-6 grid-cols-1 w-full md:w-2/3 lg:w-3/5">
             <div className="form-control w-full">
               <label className="label">
                 <span className="label-text">Non Recycleable</span>

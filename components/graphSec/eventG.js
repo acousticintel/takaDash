@@ -3,11 +3,15 @@ import ProgressBar from "../elements/progressBar";
 
 export default function EventG({ total }) {
   const getPercentage = (a, b) => {
-    return Number(Math.round((a / b) * 100 + "e2") + "e-2") ? Number(Math.round((a / b) * 100 + "e2") + "e-2") : 0;
+    return Number(Math.round((a / b) * 100 + "e2") + "e-2")
+      ? Number(Math.round((a / b) * 100 + "e2") + "e-2")
+      : 0;
   };
 
   const getRoundInt = (a, b) => {
-    return Number(Math.round((a / b) * 100 + "e0") + "e-0") ? Number(Math.round((a / b) * 100 + "e0") + "e-0") : 0;
+    return Number(Math.round((a / b) * 100 + "e0") + "e-0")
+      ? Number(Math.round((a / b) * 100 + "e0") + "e-0")
+      : 0;
   };
 
   console.log(total);
@@ -54,29 +58,13 @@ export default function EventG({ total }) {
                   <div className="flex items-end justify-between">
                     <h5 className="font-medium">Plastic</h5>
                     <h6 className="font-medium">
-                      {getPercentage(
-                        total.pet +
-                          total.lpde +
-                          total.hpde +
-                          total.pp +
-                          total.ps,
-                        total.total
-                      )}
-                      % -{" "}
-                      {total.pet +
-                        total.lpde +
-                        total.hpde +
-                        total.pp +
-                        total.ps}
+                      {getPercentage(total.plastic, total.total)}% - {total.plastic}
                       kg
                     </h6>
                   </div>
                   <ProgressBar
                     color="orange"
-                    value={getRoundInt(
-                      total.pet + total.lpde + total.hpde + total.pp + total.ps,
-                      total.total
-                    )}
+                    value={getRoundInt(total.plastic, total.total)}
                   />
                 </div>
               </div>
@@ -164,14 +152,14 @@ export default function EventG({ total }) {
                     <h5 className="font-medium">Metal</h5>
                     <h6 className="font-medium">
                       {" "}
-                      {getPercentage(total.foil + total.cans, total.total)}% -{" "}
-                      {total.foil + total.cans}
+                      {getPercentage(total.metal, total.total)}% -{" "}
+                      {total.metal}
                       kg
                     </h6>
                   </div>
                   <ProgressBar
                     color="yellow"
-                    value={getRoundInt(total.foil + total.cans, total.total)}
+                    value={getRoundInt(total.metal, total.total)}
                   />
                 </div>
               </div>
@@ -222,15 +210,18 @@ export default function EventG({ total }) {
                   <div className="flex items-end justify-between">
                     <h5 className="font-medium">Paper</h5>
                     <h6 className="font-medium">
-                    {" "}
-                      {getPercentage(total.tetra + total.cartons, total.total)}% -{" "}
-                      {total.tetra + total.cartons}
+                      {" "}
+                      {getPercentage(total.paper, total.total)}%
+                      - {total.paper}
                       kg
                     </h6>
                   </div>
                   <ProgressBar
                     color="blue"
-                    value={getRoundInt(total.tetra + total.cartons, total.total)}
+                    value={getRoundInt(
+                      total.paper,
+                      total.total
+                    )}
                   />
                 </div>
               </div>
