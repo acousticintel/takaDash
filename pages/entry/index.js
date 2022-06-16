@@ -120,8 +120,8 @@ export default function EntryPage() {
         Number(paper?.data !== "" ? paper.data : 0) +
         Number(glass?.data !== "" ? glass.data : 0) +
         Number(organic?.data !== "" ? organic.data : 0) +
-        Number(non?.data ? non.data : 0) +
-        Number(cloth?.data ? cloth.data : 0),
+        Number(non?.data !== "" ? non.data : 0) +
+        Number(cloth?.data !== "" ? cloth.data : 0),
     };
 
     //console.log(obj);
