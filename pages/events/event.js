@@ -8,7 +8,7 @@ import { db } from "../../firebase";
 
 export default function EventPage({ sectionsInit }) {
   const router = useRouter();
-  const { company, event } = router.query;
+  const info = router.query.info;
   const [sections, setSections] = useState(
     sectionsInit ? JSON.parse(sectionsInit) : []
   );
@@ -24,27 +24,29 @@ export default function EventPage({ sectionsInit }) {
   }
 
   useEffect(() => {
-    if (company?.id) {
-      console.log("company id", company);
-      //firebase listener for user data
-      const q = query(
-        collection(db, "wasteProfiles", company.id, "events"),
-        where("name", "!=", null)
-      );
-      return onSnapshot(q, (querySnapshot) => {
-        const e = [];
-        querySnapshot.forEach((doc) => {
-          e.push({ ...doc.data(), id: doc.id });
-        });
-        setEvents(e);
+    const { company, event } = JSON.parse(info);
+    const q = collection(
+      db,
+      "wasteProfiles",
+      company,
+      "events",
+      event,
+      "sections"
+    );
+
+    getDocs(q).then((querySnapshot) => {
+      let tmp = [];
+      querySnapshot.forEach((doc) => {
+        tmp.push(doc.data());
       });
-    }
-  }, [db, company]);
+
+      setSections(tmp);
+    });
+  }, [info]);
 
   useEffect(() => {
     let t = sumObjectsByKey(...sections);
-    delete t.section
-    
+    delete t.section;
     setTotal(t);
   }, [sections]);
 
@@ -75,39 +77,9 @@ export default function EventPage({ sectionsInit }) {
         </div>
         <EventsStats total={total?.total} />
         <section>
-          <EventG total={total}/>
+          <EventG total={total} />
         </section>
       </main>
     </AuthGuard>
   );
 }
-
-export const getServerSideProps = async (context) => {
-  try {
-    const info = JSON.parse(context.query.info);
-
-    const collRef = collection(
-      db,
-      "wasteProfiles",
-      info?.company,
-      "events",
-      info?.event,
-      "sections"
-    );
-    const querySnapshot = await getDocs(collRef);
-
-    let tmp = [];
-    querySnapshot.forEach((doc) => {
-      tmp.push(doc.data());
-    });
-
-    return {
-      props: { sectionsInit: JSON.stringify(tmp) },
-    };
-  } catch (error) {
-    console.log(error);
-    return {
-      props: {},
-    };
-  }
-};
