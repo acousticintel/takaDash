@@ -43,13 +43,15 @@ export default function EventPage({ sectionsInit }) {
 
         setSections(tmp);
       });
-    } 
+    }
   }, [info]);
 
   useEffect(() => {
-    let t = sumObjectsByKey(...sections);
-    delete t.section;
-    setTotal(t);
+    if (sections.length > 0) {
+      let t = sumObjectsByKey(...sections);
+      delete t.section;
+      setTotal(t);
+    }
   }, [sections]);
 
   return (

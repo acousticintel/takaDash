@@ -52,15 +52,23 @@ export default function Profile({ userDataInit, companyDataInit }) {
   const { company } = router.query;
   const { data: session } = useSession();
 
-  const [userData, setUserData] = useState(
-    userDataInit ? JSON.parse(userDataInit) : {}
-  );
-  const [companyData, setCompanyData] = useState(
-    companyDataInit ? JSON.parse(companyDataInit) : {}
-  );
+  const [userData, setUserData] = useState({});
+  const [companyData, setCompanyData] = useState({});
+
+  const [eventData, setEventData] = useState({});
+  const [total, setTotal] = useState(0);
+
+  function sumObjectsByKey(...objs) {
+    return objs.reduce((a, b) => {
+      for (let k in b) {
+        if (b.hasOwnProperty(k)) a[k] = (a[k] || 0) + b[k];
+      }
+      return a;
+    }, {});
+  }
 
   useEffect(() => {
-    let companyData = {};
+    let c = {};
     console.log("company", company);
     const q = query(
       collection(db, "wasteProfiles"),
@@ -70,10 +78,10 @@ export default function Profile({ userDataInit, companyDataInit }) {
 
     getDocs(q).then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        companyData = { ...doc.data(), id: doc.id };
+        c = { ...doc.data(), id: doc.id };
       });
 
-      setCompanyData(companyData);
+      setCompanyData(c);
     });
   }, [company]);
 
@@ -87,6 +95,38 @@ export default function Profile({ userDataInit, companyDataInit }) {
       });
     }
   }, [session]);
+
+  useEffect(() => {
+    console.log("companyData", companyData);
+    if (companyData?.id) {
+      const q = query(
+        collection(db, "wasteProfiles", companyData.id, "events"),
+        where("name", "!=", "")
+      );
+
+      getDocs(q).then((querySnapshot) => {
+        let e = [];
+        querySnapshot.forEach((doc) => {
+          companyData = { ...doc.data(), id: doc.id };
+        });
+
+        setEventData(e);
+      });
+    }
+  }, [companyData]);
+
+  useEffect(() => {
+    console.log("eventData", eventData);
+  }, [eventData]);
+
+  useEffect(() => {
+    if (eventData?.length > 0) {
+      let t = sumObjectsByKey(...eventData);
+      delete t.section;
+      console.log("t", t);
+      setTotal(t);
+    }
+  }, [eventData]);
 
   return (
     <AuthGuard>
