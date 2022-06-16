@@ -58,7 +58,7 @@ export default function Profile({ userDataInit, companyDataInit }) {
     companyDataInit ? JSON.parse(companyDataInit) : {}
   );
 
-
+  
 
   return (
     <AuthGuard>
@@ -83,27 +83,22 @@ export default function Profile({ userDataInit, companyDataInit }) {
 
 export const getServerSideProps = async (context) => {
   try {
-    const company = context.query.company ? context.query.company : "pernod";
+    const session = await getSession(context);
 
+    
 
-    let companyData = {};
-    if (company) {
-      const q = query(
-        collection(db, "wasteProfiles"),
-        where("name", "==", company),
-        limit(1)
-      );
+    let userData = {};
+    if (session?.user?.uid) {
+      const docRef = doc(db, "users", session?.user?.uid);
+      const docSnap = await getDoc(docRef);
 
-      const querySnapshot = await getDocs(q);
-
-      querySnapshot.forEach((doc) => {
-        companyData = { ...doc.data(), id: doc.id };
-      });
+      if (docSnap.exists()) {
+        userData = docSnap.data();
+      }
     }
-
     return {
       props: {
-        companyDataInit: JSON.stringify(companyData),
+        userDataInit: JSON.stringify(userData),
       },
     };
   } catch (error) {
