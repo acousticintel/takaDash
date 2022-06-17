@@ -107,21 +107,21 @@ export default function EntryPage() {
     setLoading(true);
     //validate()
     let obj = {
-      plastic: Number(plastic?.length > 0 ? plastic.data : 0),
-      metal: Number(metal?.length > 0 ? metal.data : 0),
-      paper: Number(paper?.length > 0 ? paper.data : 0),
-      glass: Number(glass?.length > 0 ? glass.data : 0),
-      organic: Number(organic?.length > 0 ? organic.data : 0),
-      non: Number(non?.length > 0 ? non.data : 0),
-      cloth: Number(cloth?.length > 0 ? cloth.data : 0),
+      plastic: Number(plastic?.data !== "" ? plastic.data : 0),
+      metal: Number(metal?.data !== "" ? metal.data : 0),
+      paper: Number(paper?.data !== "" ? paper.data : 0),
+      glass: Number(glass?.data !== "" ? glass.data : 0),
+      organic: Number(organic?.data !== "" ? organic.data : 0),
+      non: Number(non?.data !== "" ? non.data : 0),
+      cloth: Number(cloth?.data !== "" ? cloth.data : 0),
       total:
-        Number(plastic?.length > 0 ? plastic.data : 0) +
-        Number(metal?.length > 0 ? metal.data : 0) +
-        Number(paper?.length > 0 ? paper.data : 0) +
-        Number(glass?.length > 0 ? glass.data : 0) +
-        Number(organic?.length > 0 ? organic.data : 0) +
-        Number(non?.length > 0 ? non.data : 0) +
-        Number(cloth?.length > 0 ? cloth.data : 0),
+        Number(plastic?.data !== "" ? plastic.data : 0) +
+        Number(metal?.data !== "" ? metal.data : 0) +
+        Number(paper?.data !== "" ? paper.data : 0) +
+        Number(glass?.data !== "" ? glass.data : 0) +
+        Number(organic?.data !== "" ? organic.data : 0) +
+        Number(non?.data !== "" ? non.data : 0) +
+        Number(cloth?.data !== "" ? cloth.data : 0),
     };
 
     updateWasteProfile(
