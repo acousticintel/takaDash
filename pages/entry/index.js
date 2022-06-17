@@ -124,7 +124,22 @@ export default function EntryPage() {
         Number(cloth?.length > 0 ? cloth.data : 0),
     };
 
-    console.log(obj);
+    updateWasteProfile(
+      "tI10yyei4ObyOQC9Txqd",
+      "v99YlQ1WbMfeUewLfe7V",
+      section.data,
+      obj
+    )
+      .then((res) => {
+        console.log(res);
+        setLoading(false);
+        swal("Done!", "Update Complete!", "success");
+        clear();
+      })
+      .catch((err) => {
+        console.log(err);
+        swal("Sorry!", "Error whle updating!", "error");
+      });
   };
 
   return (
