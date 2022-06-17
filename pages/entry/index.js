@@ -81,15 +81,15 @@ export default function EntryPage() {
 
   const fill = (obj) => {
     setCompany("Pernod Ricard Kenya");
-    setPlastic({data: obj?.plastic ? obj.plastic : 0, state: null});
-    setMetal({data: obj?.metal ? obj.metal : 0, state: null});
-    setPaper({data: obj?.paper ? obj.paper : 0, state: null});
-    setGlass({data: obj?.glass ? obj.glass : 0, state: null});
-    setOrganic({data: obj?.organic ? obj.organic : 0, state: null});
-    setNon({data: obj?.non ? obj.non : 0, state: null});
-    setCloth({data: obj?.cloth ? obj.cloth : 0, state: null});
-  }
-  
+    setPlastic({ data: obj?.plastic ? obj.plastic : 0, state: null });
+    setMetal({ data: obj?.metal ? obj.metal : 0, state: null });
+    setPaper({ data: obj?.paper ? obj.paper : 0, state: null });
+    setGlass({ data: obj?.glass ? obj.glass : 0, state: null });
+    setOrganic({ data: obj?.organic ? obj.organic : 0, state: null });
+    setNon({ data: obj?.non ? obj.non : 0, state: null });
+    setCloth({ data: obj?.cloth ? obj.cloth : 0, state: null });
+  };
+
   const clear = () => {
     setCompany("Pernod Ricard Kenya");
     setSection("");
@@ -107,38 +107,24 @@ export default function EntryPage() {
     setLoading(true);
     //validate()
     let obj = {
-      plastic: Number(plastic?.data !== "" ? plastic.data : 0),
-      metal: Number(metal?.data !== "" ? metal.data : 0),
-      paper: Number(paper?.data !== "" ? paper.data : 0),
-      glass: Number(glass?.data !== "" ? glass.data : 0),
-      organic: Number(organic?.data !== "" ? organic.data : 0),
-      non: Number(non?.data !== "" ? non.data : 0),
+      plastic: Number(plastic?.length > 0 ? plastic.data : 0),
+      metal: Number(metal?.length > 0 ? metal.data : 0),
+      paper: Number(paper?.length > 0 ? paper.data : 0),
+      glass: Number(glass?.length > 0 ? glass.data : 0),
+      organic: Number(organic?.length > 0 ? organic.data : 0),
+      non: Number(non?.length > 0 ? non.data : 0),
+      cloth: Number(cloth?.length > 0 ? cloth.data : 0),
       total:
-        Number(plastic?.data !== "" ? plastic.data : 0) +
-        Number(metal?.data !== "" ? metal.data : 0) +
-        Number(paper?.data !== "" ? paper.data : 0) +
-        Number(glass?.data !== "" ? glass.data : 0) +
-        Number(organic?.data !== "" ? organic.data : 0) +
-        Number(non?.data !== "" ? non.data : 0) +
-        Number(cloth?.data !== "" ? cloth.data : 0),
+        Number(plastic?.length > 0 ? plastic.data : 0) +
+        Number(metal?.length > 0 ? metal.data : 0) +
+        Number(paper?.length > 0 ? paper.data : 0) +
+        Number(glass?.length > 0 ? glass.data : 0) +
+        Number(organic?.length > 0 ? organic.data : 0) +
+        Number(non?.length > 0 ? non.data : 0) +
+        Number(cloth?.length > 0 ? cloth.data : 0),
     };
 
-    updateWasteProfile(
-      "tI10yyei4ObyOQC9Txqd",
-      "v99YlQ1WbMfeUewLfe7V",
-      section.data,
-      obj
-    )
-      .then((res) => {
-        console.log(res);
-        setLoading(false);
-        swal("Done!", "Update Complete!", "success");
-        clear();
-      })
-      .catch((err) => {
-        console.log(err);
-        swal("Sorry!", "Error whle updating!", "error");
-      });
+    console.log(obj);
   };
 
   return (
