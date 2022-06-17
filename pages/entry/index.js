@@ -102,28 +102,41 @@ export default function EntryPage() {
     setCloth({ data: "", state: null });
   };
 
+  function isEmpty(e) {
+    switch (e) {
+      case "":
+      case null:
+      case false:
+      case undefined:
+        return true;
+      default:
+        return false;
+    }
+  }
+
   const handleData = async (e) => {
     e.preventDefault();
     setLoading(true);
     //validate()
     let obj = {
-      plastic: Number(plastic?.data !== "" ? plastic.data : 0),
-      metal: Number(metal?.data !== "" ? metal.data : 0),
-      paper: Number(paper?.data !== "" ? paper.data : 0),
-      glass: Number(glass?.data !== "" ? glass.data : 0),
-      organic: Number(organic?.data !== "" ? organic.data : 0),
-      non: Number(non?.data !== "" ? non.data : 0),
-      cloth: Number(cloth?.data !== "" ? cloth.data : 0),
+      plastic: Number(isEmpty(plastic.data) ? plastic.data : 0),
+      metal: Number(isEmpty(metal.data) ? plastic.data : 0),
+      paper: Number(isEmpty(paper.data) ? plastic.data : 0),
+      glass: Number(isEmpty(glass.data) ? plastic.data : 0),
+      organic: Number(isEmpty(organic.data) ? plastic.data : 0),
+      non: Number(isEmpty(non.data) ? plastic.data : 0),
+      cloth: Number(isEmpty(cloth.data) ? plastic.data : 0),
       total:
-        Number(plastic?.data !== "" ? plastic.data : 0) +
-        Number(metal?.data !== "" ? metal.data : 0) +
-        Number(paper?.data !== "" ? paper.data : 0) +
-        Number(glass?.data !== "" ? glass.data : 0) +
-        Number(organic?.data !== "" ? organic.data : 0) +
-        Number(non?.data !== "" ? non.data : 0) +
-        Number(cloth?.data !== "" ? cloth.data : 0),
+        Number(isEmpty(plastic.data) ? plastic.data : 0) +
+        Number(isEmpty(metal.data) ? plastic.data : 0) +
+        Number(isEmpty(paper.data) ? plastic.data : 0) +
+        Number(isEmpty(glass.data) ? plastic.data : 0) +
+        Number(isEmpty(organic.data) ? plastic.data : 0) +
+        Number(isEmpty(non.data) ? plastic.data : 0) +
+        Number(isEmpty(cloth.data) ? plastic.data : 0),
     };
 
+    //console.log(obj);
     updateWasteProfile(
       "tI10yyei4ObyOQC9Txqd",
       "v99YlQ1WbMfeUewLfe7V",
