@@ -128,7 +128,6 @@ export default function Profile({ userDataInit, companyDataInit }) {
   useEffect(() => {
     if (eventsData?.length > 0) {
       let t = sumObjectsByKey(...eventsData);
-      console.log("t", t);
       setTotal(t);
     }
   }, [eventsData]);
@@ -144,10 +143,10 @@ export default function Profile({ userDataInit, companyDataInit }) {
       {(userData?.role === "admin" || userData?.company?.name === "pernod") && (
         <Recent events={eventsData} company={companyData} />
       )}
-      <Stats total={total?.total} non={total?.non}/>
+      <Stats total={total?.total} non={total?.non} />
       <Categories />
       <section className="dash__linegraph">
-        <LineG />
+        <LineG events={eventsData} />
       </section>
     </motion.div>
   );

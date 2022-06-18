@@ -114,29 +114,29 @@ export default function EntryPage() {
     }
   }
 
-  const handleData = async (e) => {
+  const handleData = async (e) => { 
     e.preventDefault();
     setLoading(true);
     //validate()
     let obj = {
-      plastic: Number(isEmpty(plastic.data) ? plastic.data : 0),
-      metal: Number(isEmpty(metal.data) ? plastic.data : 0),
-      paper: Number(isEmpty(paper.data) ? plastic.data : 0),
-      glass: Number(isEmpty(glass.data) ? plastic.data : 0),
-      organic: Number(isEmpty(organic.data) ? plastic.data : 0),
-      non: Number(isEmpty(non.data) ? plastic.data : 0),
-      cloth: Number(isEmpty(cloth.data) ? plastic.data : 0),
+      plastic: Number(!isEmpty(plastic.data) ? plastic.data : 0),
+      metal: Number(!isEmpty(metal.data) ? plastic.data : 0),
+      paper: Number(!isEmpty(paper.data) ? plastic.data : 0),
+      glass: Number(!isEmpty(glass.data) ? plastic.data : 0),
+      organic: Number(!isEmpty(organic.data) ? plastic.data : 0),
+      non: Number(!isEmpty(non.data) ? plastic.data : 0),
+      cloth: Number(!isEmpty(cloth.data) ? plastic.data : 0),
       total:
-        Number(isEmpty(plastic.data) ? plastic.data : 0) +
-        Number(isEmpty(metal.data) ? plastic.data : 0) +
-        Number(isEmpty(paper.data) ? plastic.data : 0) +
-        Number(isEmpty(glass.data) ? plastic.data : 0) +
-        Number(isEmpty(organic.data) ? plastic.data : 0) +
-        Number(isEmpty(non.data) ? plastic.data : 0) +
-        Number(isEmpty(cloth.data) ? plastic.data : 0),
+        Number(!isEmpty(plastic.data) ? plastic.data : 0) +
+        Number(!isEmpty(metal.data) ? plastic.data : 0) +
+        Number(!isEmpty(paper.data) ? plastic.data : 0) +
+        Number(!isEmpty(glass.data) ? plastic.data : 0) +
+        Number(!isEmpty(organic.data) ? plastic.data : 0) +
+        Number(!isEmpty(non.data) ? plastic.data : 0) +
+        Number(!isEmpty(cloth.data) ? plastic.data : 0),
     };
 
-    //console.log(obj);
+    console.log(obj);
     updateWasteProfile(
       "tI10yyei4ObyOQC9Txqd",
       "v99YlQ1WbMfeUewLfe7V",

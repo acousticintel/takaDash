@@ -14,8 +14,6 @@ export default function EventG({ total }) {
       : 0;
   };
 
-  console.log(total);
-
   return (
     <div className="dash__graphs event">
       <div className="dash__graph">
