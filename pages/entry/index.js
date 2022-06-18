@@ -120,39 +120,24 @@ export default function EntryPage() {
     //validate()
     let obj = {
       plastic: Number(!isEmpty(plastic.data) ? plastic.data : 0),
-      metal: Number(!isEmpty(metal.data) ? plastic.data : 0),
-      paper: Number(!isEmpty(paper.data) ? plastic.data : 0),
-      glass: Number(!isEmpty(glass.data) ? plastic.data : 0),
-      organic: Number(!isEmpty(organic.data) ? plastic.data : 0),
-      non: Number(!isEmpty(non.data) ? plastic.data : 0),
-      cloth: Number(!isEmpty(cloth.data) ? plastic.data : 0),
+      metal: Number(!isEmpty(metal.data) ? metal.data : 0),
+      paper: Number(!isEmpty(paper.data) ? paper.data : 0),
+      glass: Number(!isEmpty(glass.data) ? glass.data : 0),
+      organic: Number(!isEmpty(organic.data) ? organic.data : 0),
+      non: Number(!isEmpty(non.data) ? non.data : 0),
+      cloth: Number(!isEmpty(cloth.data) ? cloth.data : 0),
       total:
         Number(!isEmpty(plastic.data) ? plastic.data : 0) +
-        Number(!isEmpty(metal.data) ? plastic.data : 0) +
-        Number(!isEmpty(paper.data) ? plastic.data : 0) +
-        Number(!isEmpty(glass.data) ? plastic.data : 0) +
-        Number(!isEmpty(organic.data) ? plastic.data : 0) +
-        Number(!isEmpty(non.data) ? plastic.data : 0) +
-        Number(!isEmpty(cloth.data) ? plastic.data : 0),
+        Number(!isEmpty(metal.data) ? metal.data : 0) +
+        Number(!isEmpty(paper.data) ? paper.data : 0) +
+        Number(!isEmpty(glass.data) ? glass.data : 0) +
+        Number(!isEmpty(organic.data) ? organic.data : 0) +
+        Number(!isEmpty(non.data) ? non.data : 0) +
+        Number(!isEmpty(cloth.data) ? cloth.data : 0),
     };
 
     console.log(obj);
-    updateWasteProfile(
-      "tI10yyei4ObyOQC9Txqd",
-      "v99YlQ1WbMfeUewLfe7V",
-      section.data,
-      obj
-    )
-      .then((res) => {
-        console.log(res);
-        setLoading(false);
-        swal("Done!", "Update Complete!", "success");
-        clear();
-      })
-      .catch((err) => {
-        console.log(err);
-        swal("Sorry!", "Error whle updating!", "error");
-      });
+    
   };
 
   return (
