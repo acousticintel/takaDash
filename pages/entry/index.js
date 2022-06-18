@@ -133,10 +133,26 @@ export default function EntryPage() {
         Number(!isEmpty(glass.data) ? glass.data : 0) +
         Number(!isEmpty(organic.data) ? organic.data : 0) +
         Number(!isEmpty(non.data) ? non.data : 0) +
-        Number(!isEmpty(cloth.data) ? cloth.data : 0),
+        Number(!isEmpty(cloth.data) ? plastic.data : 0),
     };
 
-    console.log(obj);
+    //console.log(obj);
+    updateWasteProfile(
+      "tI10yyei4ObyOQC9Txqd",
+      "v99YlQ1WbMfeUewLfe7V",
+      section.data,
+      obj
+    )
+      .then((res) => {
+        console.log(res);
+        setLoading(false);
+        swal("Done!", "Update Complete!", "success");
+        clear();
+      })
+      .catch((err) => {
+        console.log(err);
+        swal("Sorry!", "Error whle updating!", "error");
+      });
     
   };
 
