@@ -3,13 +3,20 @@ import dynamic from "next/dynamic";
 
 export default function LineG({ events }) {
   const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
+  const [dynamicData, setDynamicData] = useState([]);
 
   useEffect(() => {
     if (events.length > 0) {
       let chartD = [];
       events.map((event) => {
         Object.entries(event).map(([key, value]) => {
-          if (key !== "timestamp" && key !== "image" && key !== "id" && key !== "location") {
+          if (
+            key !== "location" &&
+            key !== "timestamp" &&
+            key !== "image" &&
+            key !== "total" &&
+            key !== "id"
+          ) {
             chartD.push({
               name: key,
               data: value,
@@ -17,40 +24,28 @@ export default function LineG({ events }) {
           }
         });
       });
+      console.log(chartD);
+
+      const newList = chartD.reduce((items, item) => {
+        const { name, data } = item;
+        const itemIndex = items.findIndex((item) => item.name === name);
+        if (itemIndex === -1) {
+          item.data = [0, data];
+          items.push(item);
+        } else {
+          items[itemIndex].data = [...items[itemIndex].data, data];
+        }
+
+        return items;
+      }, []);
+
+      console.log(newList);
+      setDynamicData(newList);
     }
   }, [events]);
 
-  const [data, setData] = useState({
-    series: [
-      {
-        name: "Glass",
-        data: [0, 50, 45],
-      },
-      {
-        name: "Plastic",
-        data: [0, 11, 32],
-      },
-      {
-        name: "Metal",
-        data: [0, 5, 20],
-      },
-      {
-        name: "Paper",
-        data: [0, 5, 20],
-      },
-      {
-        name: "Electronics",
-        data: [0, 0, 0],
-      },
-      {
-        name: "Organic",
-        data: [0, 1, 5],
-      },
-      {
-        name: "Non-Recyclables",
-        data: [0, 5, 3],
-      },
-    ],
+  const data = {
+    series: dynamicData,
     options: {
       title: {
         text: "Total Waste Collected by Category",
@@ -88,7 +83,7 @@ export default function LineG({ events }) {
         offsetX: 40,
       },
     },
-  });
+  };
 
   return (
     <div className=" relative h-full">
