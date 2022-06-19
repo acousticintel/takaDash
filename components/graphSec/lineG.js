@@ -11,6 +11,7 @@ export default function LineG({ events }) {
       events.map((event) => {
         Object.entries(event).map(([key, value]) => {
           if (
+            key !== "name" &&
             key !== "location" &&
             key !== "timestamp" &&
             key !== "image" &&
@@ -39,8 +40,19 @@ export default function LineG({ events }) {
         return items;
       }, []);
 
-      console.log(newList);
-      setDynamicData(newList);
+      //sort new list by name
+      const sortedList = newList.sort((a, b) => {
+        if (a.name < b.name) {
+          return -1;
+        }
+        if (a.name > b.name) {
+          return 1;
+        }
+        return 0;
+      });
+
+      //console.log(sortedList);
+      setDynamicData(sortedList);
     }
   }, [events]);
 
@@ -58,13 +70,13 @@ export default function LineG({ events }) {
         enabled: false,
       },
       colors: [
+        "#fb923c",
         "#14b8a6",
-        "#f97316",
-        "#facc15",
-        "#3b82f6",
-        "#a855f7",
-        "#64748b",
+        "#facc15",  
         "#ef4444",
+        "#6b7280",  
+        "#38bdf8",
+        "#fb923c",
       ],
       stroke: {
         curve: "smooth",
