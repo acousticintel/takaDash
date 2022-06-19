@@ -133,7 +133,7 @@ export default function EntryPage() {
         Number(!isEmpty(glass.data) ? glass.data : 0) +
         Number(!isEmpty(organic.data) ? organic.data : 0) +
         Number(!isEmpty(non.data) ? non.data : 0) +
-        Number(!isEmpty(cloth.data) ? plastic.data : 0),
+        Number(!isEmpty(cloth.data) ? cloth.data : 0),
     };
 
     //console.log(obj);
