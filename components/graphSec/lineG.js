@@ -15,6 +15,7 @@ export default function LineG({ events }) {
             key !== "location" &&
             key !== "timestamp" &&
             key !== "image" &&
+            key !== "image" &&
             key !== "total" &&
             key !== "id"
           ) {
@@ -25,7 +26,6 @@ export default function LineG({ events }) {
           }
         });
       });
-      console.log(chartD);
 
       const newList = chartD.reduce((items, item) => {
         const { name, data } = item;

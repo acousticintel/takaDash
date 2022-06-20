@@ -1,5 +1,5 @@
 .dash__page {
-  @apply container mx-auto px-6 pt-6;
+  @apply container mx-auto px-6 pt-6 pb-20;
 }
 
 .dash__page > section {
@@ -8,4 +8,8 @@
 
 .dash__page > section.clear {
   @apply bg-transparent rounded-3xl px-6 py-10 my-6;
+}
+
+.dash__page > .dash__page__no-access{
+  @apply min-h-[350px] flex items-center justify-center;
 }

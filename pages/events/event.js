@@ -72,7 +72,6 @@ export default function EventPage({}) {
   }, [sections]);
 
   return (
-    <AuthGuard>
       <main className="events__page">
         <div className="event__details">
           <>
@@ -106,6 +105,5 @@ export default function EventPage({}) {
           <EventG total={total} />
         </section>
       </main>
-    </AuthGuard>
   );
 }

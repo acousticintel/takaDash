@@ -33,8 +33,8 @@ export default function SideMenu() {
 
   useEffect(() => {
     //firebase listener for user data
-    if (session?.user?.uid) {
-      const docRef = doc(db, "users", session?.user?.uid);
+    if (session?.user?.id) {
+      const docRef = doc(db, "users", session?.user?.id);
       getDoc(docRef).then((doc) => {
         setUserData(doc.data());
       });

@@ -1,9 +1,10 @@
 .recent__events{
-  @apply my-6 bg-transparent shadow-none;
+  @apply my-6 bg-transparent shadow-none min-h-[350px] 
+  flex flex-1 flex-col items-center justify-between;
 }
 
 .recent__events > .list{
-  @apply grid grid-cols-1 md:grid-cols-2 gap-6 py-6;
+  @apply grid grid-cols-1 md:grid-cols-2 gap-6 py-6 !w-full;
 }
 
 .recent__events > .list > .event {

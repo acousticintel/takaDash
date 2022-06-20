@@ -39,12 +39,12 @@ function useProvideData() {
 
   async function createUser() {
     if (status !== "loading" && session?.user) {
-      const docRef = doc(db, "users", session.user.uid);
+      const docRef = doc(db, "users", session.user.id);
       const docSnap = await getDoc(docRef);
 
       if (!docSnap.exists()) {
         // Add a new document in collection "cities"
-        await setDoc(doc(db, "users", session.user.uid), {
+        await setDoc(doc(db, "users", session.user.id), {
           name: session.user.name,
           email: session.user.email,
         });

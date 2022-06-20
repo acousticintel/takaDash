@@ -20,7 +20,7 @@ export default function TotalStats({ total, non }) {
       </div>
       <div className="stat">
         <h6>Landfill diversion rate</h6>
-        <h5>{getPercentage(non, total)}%</h5>
+        <h5>{getPercentage((total ? total : 0) - (non ? non : 0), total)}%</h5>
       </div>
     </div>
   );

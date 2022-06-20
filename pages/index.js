@@ -1,7 +1,8 @@
+import Image from "next/image";
 import { useRouter } from "next/router";
 //custom pack
 import { motion } from "framer-motion";
-import { useSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 //custom
 import Stats from "../components/stats/totalStats";
 import LineG from "../components/graphSec/lineG";
@@ -18,6 +19,8 @@ import {
   collection,
   where,
 } from "firebase/firestore";
+import firebase from "firebase/compat/app";
+import "firebase/compat/firestore";
 import { db } from "../firebase";
 
 const contVar = {
@@ -51,8 +54,12 @@ export default function Profile({ userDataInit, companyDataInit }) {
   const { company } = router.query;
   const { data: session } = useSession();
 
-  const [userData, setUserData] = useState({});
-  const [companyData, setCompanyData] = useState({});
+  const [userData, setUserData] = useState(
+    userDataInit ? JSON.parse(userDataInit) : {}
+  );
+  const [companyData, setCompanyData] = useState(
+    companyDataInit ? JSON.parse(companyDataInit) : {}
+  );
 
   const [eventsData, setEventsData] = useState({});
   const [total, setTotal] = useState(0);
@@ -69,7 +76,11 @@ export default function Profile({ userDataInit, companyDataInit }) {
   const getCompanyData = async (company) => {
     const q = query(
       collection(db, "wasteProfiles"),
-      where("name", "==", company ? company : "pernod"),
+      where(
+        "name",
+        "==",
+        company ? company : userData?.company ? userData.company : "demo"
+      ),
       limit(1)
     );
 
@@ -107,8 +118,8 @@ export default function Profile({ userDataInit, companyDataInit }) {
 
   useEffect(() => {
     let u = {};
-    if (session?.user?.uid) {
-      const docRef = doc(db, "users", session?.user?.uid);
+    if (session?.user?.id) {
+      const docRef = doc(db, "users", session?.user?.id);
       getDoc(docRef).then((doc) => {
         u = { ...doc.data(), id: doc.id };
         setUserData(u);
@@ -122,8 +133,9 @@ export default function Profile({ userDataInit, companyDataInit }) {
   }, [companyData]);
 
   useEffect(() => {
-    //console.log("eventData", eventsData);
-  }, [eventsData]);
+    //console.log("eventData", userData);
+    //console.log("companyData", companyData);
+  }, [companyData, userData]);
 
   useEffect(() => {
     if (eventsData?.length > 0) {
@@ -132,6 +144,13 @@ export default function Profile({ userDataInit, companyDataInit }) {
     }
   }, [eventsData]);
 
+  const companyName = (company) => {
+    if (company === "pernod") {
+      return "Pernod Ricard";
+    }
+    return "Demo";
+  };
+
   return (
     <motion.div
       className="dash__page"
@@ -139,9 +158,28 @@ export default function Profile({ userDataInit, companyDataInit }) {
       initial="hide"
       animate="show"
     >
-      <motion.h5 variants={riseVar}>Hello {session?.user.name}</motion.h5>
-      {(userData?.role === "admin" || userData?.company?.name === "pernod") && (
+      <div className="flex flex-col items-center justify-center">
+        <div className="avatar">
+          <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+            {companyData?.image && (
+              <Image src={companyData.image} layout="fill" />
+            )}
+          </div>
+        </div>
+        <h1 className="text-2xl font-semibold my-2">
+          {companyName(companyData.name)} Waste Profile
+        </h1>
+      </div>
+
+      {userData?.role === "admin" || userData?.company?.name === "pernod" ? (
         <Recent events={eventsData} company={companyData} />
+      ) : (
+        <div className="dash__page__no-access">
+          <h6 className="text-xl text-center text-gray-500 my-20">
+            To avoid showing sensitive information. <br />
+            You must sign in to view events data
+          </h6>
+        </div>
       )}
       <Stats total={total?.total} non={total?.non} />
       <Categories />
@@ -151,3 +189,44 @@ export default function Profile({ userDataInit, companyDataInit }) {
     </motion.div>
   );
 }
+export const getServerSideProps = async (context) => {
+  try {
+    const session = await getSession(context);
+
+    const q = query(
+      collection(db, "users"),
+      where("email", "==", session?.user?.email),
+      limit(1)
+    );
+    const querySnapshot = await getDocs(q);
+    let tmpUser = {};
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      tmpUser = { ...doc.data(), id: doc.id };
+    });
+
+    const q1 = query(
+      collection(db, "wasteProfiles"),
+      where("name", "==", tmpUser?.company),
+      limit(1)
+    );
+    const querySnapshot1 = await getDocs(q1);
+    let tmpCompany = {};
+    querySnapshot1.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      tmpCompany = { ...doc.data(), id: doc.id };
+    });
+
+    return {
+      props: {
+        userDataInit: JSON.stringify(tmpUser),
+        companyDataInit: JSON.stringify(tmpCompany),
+      },
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      props: {},
+    };
+  }
+};
